@@ -1,0 +1,704 @@
+{
+  "year": 2083,
+  "sources": [
+    "https://www.moha.gov.np/page/government-and-public-holidays-in-2083",
+    "https://newsofnepal.com/2026/03/04/756913/",
+    "https://www.pradhanlaw.com/publications/list-of-public-holidays-2083-202627",
+    "https://nepalhrm.com/tools/holiday-calendar/",
+    "https://www.hamropatro.com/en/nepali-public-holidays",
+    "https://www.hamropatro.com/en/calendar/2083/1",
+    "https://nepalicalendar.rat32.com/2083/baisakh",
+    "https://english.onlinekhabar.com/public-holiday-gen-z-martyrs-day.html",
+    "https://english.nepalpress.com/2026/05/22/government-declares-may-28-public-holiday-on-occasion-of-bakar-eid/",
+    "https://peoplesreview.com.np/2026/06/20/bhotojatra-festival-held-in-lalitpur/",
+    "https://www.dcnepal.com/2026/04/753735/"
+  ],
+  "events": [
+    {
+      "month": 1,
+      "day": 1,
+      "en": "Mesh Sankranti",
+      "ne": "मेष संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 1,
+      "day": 1,
+      "en": "Nepali New Year",
+      "ne": "नयाँ वर्ष",
+      "holiday": true
+    },
+    {
+      "month": 1,
+      "day": 1,
+      "en": "Biska Jatra",
+      "ne": "बिस्का जात्रा",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Bhaktapur"
+    },
+    {
+      "month": 1,
+      "day": 2,
+      "en": "Siruwa Pawani",
+      "ne": "सिरुवा पावनी",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Holiday in Jhapa, Morang, Sunsari, Siraha and Saptari"
+    },
+    {
+      "month": 1,
+      "day": 4,
+      "en": "Mata Tirtha Aunsi (Mother's Day)",
+      "ne": "मातातीर्थ औंसी (आमाको मुख हेर्ने दिन)",
+      "holiday": false
+    },
+    {
+      "month": 1,
+      "day": 7,
+      "en": "Akshaya Tritiya",
+      "ne": "अक्षय तृतीया",
+      "holiday": false
+    },
+    {
+      "month": 1,
+      "day": 8,
+      "en": "Rato Machhindranath Rath Yatra begins",
+      "ne": "रातो मच्छिन्द्रनाथ रथयात्रा आरम्भ",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Lalitpur"
+    },
+    {
+      "month": 1,
+      "day": 11,
+      "en": "Loktantra Diwas (Democracy Day)",
+      "ne": "लोकतन्त्र दिवस",
+      "holiday": false
+    },
+    {
+      "month": 1,
+      "day": 18,
+      "en": "Buddha Jayanti",
+      "ne": "बुद्ध जयन्ती",
+      "holiday": true
+    },
+    {
+      "month": 1,
+      "day": 18,
+      "en": "Ubhauli Parva",
+      "ne": "उभौली पर्व",
+      "holiday": true
+    },
+    {
+      "month": 1,
+      "day": 18,
+      "en": "Chandi Purnima",
+      "ne": "चण्डी पूर्णिमा",
+      "holiday": true
+    },
+    {
+      "month": 1,
+      "day": 18,
+      "en": "International Labour Day",
+      "ne": "अन्तर्राष्ट्रिय श्रमिक दिवस",
+      "holiday": true
+    },
+    {
+      "month": 2,
+      "day": 1,
+      "en": "Brish Sankranti",
+      "ne": "वृष संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 2,
+      "day": 14,
+      "en": "Eid al-Adha (Bakar Eid)",
+      "ne": "बकर इद",
+      "holiday": true
+    },
+    {
+      "month": 2,
+      "day": 15,
+      "en": "Republic Day",
+      "ne": "गणतन्त्र दिवस",
+      "holiday": true
+    },
+    {
+      "month": 2,
+      "day": 21,
+      "en": "National Day against Caste Discrimination and Untouchability",
+      "ne": "जातीय भेदभाव तथा छुवाछूत उन्मूलन राष्ट्रिय दिवस",
+      "holiday": false
+    },
+    {
+      "month": 3,
+      "day": 1,
+      "en": "Mithun Sankranti",
+      "ne": "मिथुन संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 3,
+      "day": 6,
+      "en": "Bhoto Jatra",
+      "ne": "भोटो जात्रा",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Kathmandu Valley only"
+    },
+    {
+      "month": 3,
+      "day": 15,
+      "en": "National Paddy Day (Asar Pandhra)",
+      "ne": "राष्ट्रिय धान दिवस (असार १५)",
+      "holiday": false
+    },
+    {
+      "month": 3,
+      "day": 29,
+      "en": "Bhanu Jayanti",
+      "ne": "भानु जयन्ती",
+      "holiday": false
+    },
+    {
+      "month": 4,
+      "day": 1,
+      "en": "Saune Sankranti (Karkat Sankranti)",
+      "ne": "साउने संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 4,
+      "day": 9,
+      "en": "Harishayani Ekadashi",
+      "ne": "हरिशयनी एकादशी",
+      "holiday": false
+    },
+    {
+      "month": 4,
+      "day": 13,
+      "en": "Guru Purnima",
+      "ne": "गुरु पूर्णिमा",
+      "holiday": false
+    },
+    {
+      "month": 4,
+      "day": 26,
+      "en": "Ghantakarna (Gathemangal)",
+      "ne": "घण्टाकर्ण (गठेमंगल)",
+      "holiday": false
+    },
+    {
+      "month": 5,
+      "day": 1,
+      "en": "Singh Sankranti",
+      "ne": "सिंह संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 5,
+      "day": 1,
+      "en": "Nag Panchami",
+      "ne": "नाग पञ्चमी",
+      "holiday": false
+    },
+    {
+      "month": 5,
+      "day": 10,
+      "en": "Prophet Muhammad Jayanti",
+      "ne": "मोहम्मद जयन्ती",
+      "holiday": false,
+      "scope": "community",
+      "note_en": "Holiday for the Muslim community"
+    },
+    {
+      "month": 5,
+      "day": 12,
+      "en": "Janai Purnima / Raksha Bandhan",
+      "ne": "जनै पूर्णिमा / रक्षाबन्धन",
+      "holiday": true
+    },
+    {
+      "month": 5,
+      "day": 13,
+      "en": "Gai Jatra",
+      "ne": "गाईजात्रा",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Kathmandu Valley and Newar community"
+    },
+    {
+      "month": 5,
+      "day": 19,
+      "en": "Shree Krishna Janmashtami",
+      "ne": "श्रीकृष्ण जन्माष्टमी",
+      "holiday": true
+    },
+    {
+      "month": 5,
+      "day": 19,
+      "en": "Gaura Parva",
+      "ne": "गौरा पर्व",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Holiday in Sudurpashchim"
+    },
+    {
+      "month": 5,
+      "day": 22,
+      "en": "Civil Service Day",
+      "ne": "निजामती सेवा दिवस",
+      "holiday": false
+    },
+    {
+      "month": 5,
+      "day": 23,
+      "en": "Gen Z Martyrs' Day",
+      "ne": "जेन–जी सहिद दिवस",
+      "holiday": true
+    },
+    {
+      "month": 5,
+      "day": 26,
+      "en": "Kushe Aunsi (Father's Day)",
+      "ne": "कुशे औंसी (बुबाको मुख हेर्ने दिन)",
+      "holiday": false
+    },
+    {
+      "month": 5,
+      "day": 28,
+      "en": "Dar Khane Din",
+      "ne": "दर खाने दिन",
+      "holiday": false
+    },
+    {
+      "month": 5,
+      "day": 29,
+      "en": "Haritalika Teej",
+      "ne": "हरितालिका तीज",
+      "holiday": false,
+      "scope": "women",
+      "note_en": "Holiday for women employees"
+    },
+    {
+      "month": 5,
+      "day": 30,
+      "en": "Rishi Panchami",
+      "ne": "ऋषि पञ्चमी",
+      "holiday": false
+    },
+    {
+      "month": 6,
+      "day": 1,
+      "en": "Kanya Sankranti",
+      "ne": "कन्या संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 6,
+      "day": 1,
+      "en": "Vishwakarma Puja",
+      "ne": "विश्वकर्मा पूजा",
+      "holiday": false
+    },
+    {
+      "month": 6,
+      "day": 3,
+      "en": "Constitution Day",
+      "ne": "संविधान दिवस",
+      "holiday": true
+    },
+    {
+      "month": 6,
+      "day": 9,
+      "en": "Indra Jatra",
+      "ne": "इन्द्रजात्रा",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Kathmandu Valley only"
+    },
+    {
+      "month": 6,
+      "day": 11,
+      "en": "Sorha Shraddha begins",
+      "ne": "सोह्र श्राद्ध आरम्भ",
+      "holiday": false
+    },
+    {
+      "month": 6,
+      "day": 18,
+      "en": "Jitiya Parva",
+      "ne": "जितिया पर्व",
+      "holiday": false,
+      "scope": "women",
+      "note_en": "Holiday for women who observe Jitiya"
+    },
+    {
+      "month": 6,
+      "day": 24,
+      "en": "Pitri Bisarjan (Sorha Shraddha ends)",
+      "ne": "पितृ विसर्जन",
+      "holiday": false
+    },
+    {
+      "month": 6,
+      "day": 25,
+      "en": "Ghatasthapana",
+      "ne": "घटस्थापना",
+      "holiday": true
+    },
+    {
+      "month": 6,
+      "day": 31,
+      "en": "Fulpati",
+      "ne": "फूलपाती",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 1,
+      "en": "Tula Sankranti",
+      "ne": "तुला संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 7,
+      "day": 1,
+      "en": "Maha Ashtami",
+      "ne": "महाअष्टमी",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 2,
+      "en": "Dashain Holiday",
+      "ne": "दशैं बिदा",
+      "holiday": true,
+      "note_en": "Ashtami spans two days this year"
+    },
+    {
+      "month": 7,
+      "day": 3,
+      "en": "Maha Navami",
+      "ne": "महानवमी",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 4,
+      "en": "Vijaya Dashami",
+      "ne": "विजया दशमी",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 5,
+      "en": "Papankusha Ekadashi",
+      "ne": "पापाङ्कुशा एकादशी",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 6,
+      "en": "Dashain Holiday (Dwadashi)",
+      "ne": "दशैं बिदा (द्वादशी)",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 8,
+      "en": "Kojagrat Purnima",
+      "ne": "कोजाग्रत पूर्णिमा",
+      "holiday": false
+    },
+    {
+      "month": 7,
+      "day": 20,
+      "en": "Dhanteras",
+      "ne": "धनतेरस",
+      "holiday": false
+    },
+    {
+      "month": 7,
+      "day": 21,
+      "en": "Kag Tihar",
+      "ne": "काग तिहार",
+      "holiday": false
+    },
+    {
+      "month": 7,
+      "day": 22,
+      "en": "Kukur Tihar",
+      "ne": "कुकुर तिहार",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 22,
+      "en": "Laxmi Puja",
+      "ne": "लक्ष्मी पूजा",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 23,
+      "en": "Gai Puja",
+      "ne": "गाई पूजा",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 24,
+      "en": "Govardhan Puja / Mha Puja",
+      "ne": "गोवर्धन पूजा / म्ह पूजा",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 24,
+      "en": "Nepal Sambat New Year (1147)",
+      "ne": "नेपाल संवत् ११४७ नयाँ वर्ष",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 25,
+      "en": "Bhai Tika",
+      "ne": "भाइटीका",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 25,
+      "en": "Falgunanda Jayanti",
+      "ne": "फाल्गुनन्द जयन्ती",
+      "holiday": false,
+      "scope": "community",
+      "note_en": "Holiday for the Kirat community"
+    },
+    {
+      "month": 7,
+      "day": 26,
+      "en": "Tihar Holiday",
+      "ne": "तिहार बिदा",
+      "holiday": true
+    },
+    {
+      "month": 7,
+      "day": 29,
+      "en": "Chhath Parva",
+      "ne": "छठ पर्व",
+      "holiday": true
+    },
+    {
+      "month": 8,
+      "day": 1,
+      "en": "Brishchik Sankranti",
+      "ne": "वृश्चिक संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 8,
+      "day": 4,
+      "en": "Haribodhini Ekadashi",
+      "ne": "हरिबोधिनी एकादशी",
+      "holiday": false
+    },
+    {
+      "month": 8,
+      "day": 8,
+      "en": "Guru Nanak Jayanti",
+      "ne": "गुरु नानक जयन्ती",
+      "holiday": false,
+      "scope": "community",
+      "note_en": "Holiday for the Sikh community"
+    },
+    {
+      "month": 8,
+      "day": 17,
+      "en": "International Day of Persons with Disabilities",
+      "ne": "अन्तर्राष्ट्रिय अपाङ्गता दिवस",
+      "holiday": false,
+      "scope": "disabled",
+      "note_en": "Holiday for employees with disabilities"
+    },
+    {
+      "month": 8,
+      "day": 21,
+      "en": "Bala Chaturdashi",
+      "ne": "बाला चतुर्दशी",
+      "holiday": false
+    },
+    {
+      "month": 8,
+      "day": 28,
+      "en": "Vivaha Panchami",
+      "ne": "विवाह पञ्चमी",
+      "holiday": false
+    },
+    {
+      "month": 9,
+      "day": 1,
+      "en": "Dhanu Sankranti",
+      "ne": "धनु संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 9,
+      "day": 9,
+      "en": "Yomari Punhi",
+      "ne": "योमरि पुन्ही",
+      "holiday": true
+    },
+    {
+      "month": 9,
+      "day": 9,
+      "en": "Udhauli Parva",
+      "ne": "उधौली पर्व",
+      "holiday": true
+    },
+    {
+      "month": 9,
+      "day": 10,
+      "en": "Christmas",
+      "ne": "क्रिसमस",
+      "holiday": true
+    },
+    {
+      "month": 9,
+      "day": 15,
+      "en": "Tamu Lhosar",
+      "ne": "तमु ल्होसार",
+      "holiday": true
+    },
+    {
+      "month": 9,
+      "day": 27,
+      "en": "Prithvi Jayanti / National Unity Day",
+      "ne": "पृथ्वी जयन्ती / राष्ट्रिय एकता दिवस",
+      "holiday": true
+    },
+    {
+      "month": 10,
+      "day": 1,
+      "en": "Maghe Sankranti / Maghi",
+      "ne": "माघे संक्रान्ति / माघी",
+      "holiday": true
+    },
+    {
+      "month": 10,
+      "day": 8,
+      "en": "Shree Swasthani Brata begins",
+      "ne": "श्रीस्वस्थानी व्रत आरम्भ",
+      "holiday": false
+    },
+    {
+      "month": 10,
+      "day": 16,
+      "en": "Martyrs' Day",
+      "ne": "शहीद दिवस",
+      "holiday": true
+    },
+    {
+      "month": 10,
+      "day": 24,
+      "en": "Sonam Lhosar",
+      "ne": "सोनाम ल्होसार",
+      "holiday": true
+    },
+    {
+      "month": 10,
+      "day": 28,
+      "en": "Basanta Panchami / Saraswati Puja",
+      "ne": "बसन्त पञ्चमी / सरस्वती पूजा",
+      "holiday": false,
+      "scope": "educational",
+      "note_en": "Holiday for educational institutions"
+    },
+    {
+      "month": 11,
+      "day": 1,
+      "en": "Kumbha Sankranti",
+      "ne": "कुम्भ संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 11,
+      "day": 7,
+      "en": "Democracy Day (Prajatantra Diwas)",
+      "ne": "राष्ट्रिय प्रजातन्त्र दिवस",
+      "holiday": true
+    },
+    {
+      "month": 11,
+      "day": 8,
+      "en": "Shree Swasthani Brata ends",
+      "ne": "श्रीस्वस्थानी व्रत समाप्ति",
+      "holiday": false
+    },
+    {
+      "month": 11,
+      "day": 22,
+      "en": "Maha Shivaratri",
+      "ne": "महाशिवरात्रि",
+      "holiday": true
+    },
+    {
+      "month": 11,
+      "day": 22,
+      "en": "Nepali Army Day",
+      "ne": "नेपाली सेना दिवस",
+      "holiday": false
+    },
+    {
+      "month": 11,
+      "day": 24,
+      "en": "International Women's Day",
+      "ne": "अन्तर्राष्ट्रिय नारी दिवस",
+      "holiday": true
+    },
+    {
+      "month": 11,
+      "day": 25,
+      "en": "Gyalpo Lhosar",
+      "ne": "ग्याल्पो ल्होसार",
+      "holiday": true
+    },
+    {
+      "month": 12,
+      "day": 1,
+      "en": "Meen Sankranti",
+      "ne": "मीन संक्रान्ति",
+      "holiday": false
+    },
+    {
+      "month": 12,
+      "day": 7,
+      "en": "Holi (Fagu Purnima, Hills)",
+      "ne": "फागु पूर्णिमा (होली, पहाड)",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Holiday in 56 hill/mountain districts"
+    },
+    {
+      "month": 12,
+      "day": 8,
+      "en": "Holi (Fagu Purnima, Terai)",
+      "ne": "फागु पूर्णिमा (होली, तराई)",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Holiday in 21 Terai districts"
+    },
+    {
+      "month": 12,
+      "day": 23,
+      "en": "Ghode Jatra",
+      "ne": "घोडेजात्रा",
+      "holiday": false,
+      "scope": "regional",
+      "note_en": "Kathmandu Valley only"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+// Pulls FLUTTER_BUILD_NAME / FLUTTER_BUILD_NUMBER so the extension's version
+// matches the app. Optional: the file only exists after `flutter pub get`.
+#include? "../Flutter/Generated.xcconfig"

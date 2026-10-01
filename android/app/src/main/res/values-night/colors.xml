@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Maroon is too dark on a dark notification shade. -->
+    <color name="notification_number">#E8A39A</color>
+    <color name="notification_tithi">#E0B25C</color>
+    <color name="notification_holiday">#FF8A80</color>
+    <color name="notification_divider">#33FFFFFF</color>
+    <color name="notification_saturday">#E0B25C</color>
+    <color name="widget_card">#201A17</color>
+    <color name="widget_text">#F1E6DC</color>
+    <color name="widget_muted">#B9A193</color>
+    <color name="widget_number">#E8A39A</color>
+    <color name="widget_gold">#E0B25C</color>
+    <color name="widget_holiday">#FF8A80</color>
+    <color name="widget_hair">#3A302A</color>
+</resources>

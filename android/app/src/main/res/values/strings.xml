@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Patro</string>
+    <string name="widget_today_label">Today</string>
+    <string name="widget_today_description">Today\'s date, tithi and moon</string>
+    <string name="widget_agenda_label">Upcoming</string>
+    <string name="widget_agenda_description">Today, plus countdowns to holidays, festivals and reminders</string>
+    <string name="widget_month_label">Month</string>
+    <string name="widget_month_description">This month with holidays, today\'s tithi and the next festival</string>
+    <string name="notification_channel_name">Today\'s date</string>
+    <string name="notification_channel_description">Keeps today\'s Nepali date in the notification shade</string>
+    <string name="widget_desk_label">Desk page</string>
+    <string name="widget_desk_description">Today on a tear-off calendar page</string>
+    <string name="widget_week_label">This week</string>
+    <string name="widget_week_description">Today and this week at a glance</string>
+</resources>

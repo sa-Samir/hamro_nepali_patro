@@ -1,0 +1,24 @@
+{
+  "source": "/Users/samirkhadka/Development/Flutter/Patro/patro/ios/PatroWidget/DeskWidget.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Desk page",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Today on a tear-off calendar page",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 14
+        }
+      }
+    ]
+  },
+  "version": 1
+}

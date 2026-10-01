@@ -1,0 +1,270 @@
+{
+  "@@locale": "en",
+  "appTitle": "Patro",
+  "nepaliCalendar": "Nepali Calendar",
+  "navCalendar": "Calendar",
+  "navConverter": "Converter",
+  "navNotes": "Reminders",
+  "navSettings": "Settings",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "tipNewFeature": "New: save your important dates. Tap a date, then the bell to get reminded before it comes.",
+  "add": "Add",
+  "nothingOnThisDay": "Nothing on this day",
+  "thisMonth": "This month",
+  "publicHoliday": "Public holiday",
+  "holidayDataMissing": "Holiday data isn't available for {year} yet.",
+  "@holidayDataMissing": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "goToMonth": "Go to month",
+  "year": "Year",
+  "month": "Month",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "save": "Save",
+  "delete": "Delete",
+  "undo": "Undo",
+  "share": "Share",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
+  "converterTitle": "Date converter",
+  "bsToAd": "BS → AD",
+  "adToBs": "AD → BS",
+  "bsDateLabel": "Date in BS",
+  "adDateLabel": "Date in AD",
+  "convertedDate": "Converted date",
+  "tapToChange": "Tap to change",
+  "isToday": "That's today",
+  "inDays": "{count, plural, =1{Tomorrow} other{In {count} days}}",
+  "@inDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "daysAgo": "{count, plural, =1{Yesterday} other{{count} days ago}}",
+  "@daysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "daysBetweenTitle": "Days between dates",
+  "fromDate": "From",
+  "toDate": "To",
+  "swap": "Swap",
+  "totalDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@totalDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsMonthsDays": "{years} y, {months} m, {days} d",
+  "@yearsMonthsDays": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      },
+      "months": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "addReminderOnDate": "Add reminder",
+  "notesTitle": "Reminders",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "emptyNotes": "No reminders yet. Tap + to save an important date.",
+  "noteDeleted": "Reminder deleted",
+  "newNote": "New reminder",
+  "editNote": "Edit reminder",
+  "titleLabel": "Title",
+  "titleHint": "e.g. Aama's birthday",
+  "titleRequired": "Please enter a title",
+  "descriptionLabel": "Notes (optional)",
+  "dateLabel": "Date",
+  "repeatLabel": "Repeat",
+  "repeatNone": "Doesn't repeat",
+  "repeatYearlyBs": "Every year (same BS date)",
+  "repeatYearlyAd": "Every year (same AD date)",
+  "repeatMonthlyBs": "Every month (same BS day)",
+  "notifyMe": "Notify me",
+  "notifyWhen": "When",
+  "onTheDay": "On the day",
+  "daysBefore": "{count, plural, =1{1 day before} other{{count} days before}}",
+  "weekBefore": "1 week before",
+  "@daysBefore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderTime": "Time",
+  "deleteNoteConfirm": "Delete this reminder?",
+  "notificationsDenied": "Notifications are off for Patro. Turn them on in system settings to get reminders.",
+  "reminderToday": "Today · {date}",
+  "@reminderToday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderInDays": "{count, plural, =1{Tomorrow · {date}} other{In {count} days · {date}}}",
+  "@reminderInDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderChannelName": "Reminders",
+  "reminderChannelDescription": "Reminders for your saved dates",
+  "settingsTitle": "Settings",
+  "sectionGeneral": "General",
+  "language": "Language",
+  "numerals": "Digits",
+  "numeralsNepali": "Nepali १२३",
+  "numeralsEnglish": "English 123",
+  "theme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "showAdDates": "Show AD dates in the calendar",
+  "sectionReminders": "Reminders",
+  "defaultReminderTime": "Default reminder time",
+  "sectionTodayNotification": "Today in the notification bar",
+  "todayNotification": "Show today's date",
+  "todayNotificationSubtitle": "A silent notification that updates every midnight",
+  "includeAdDate": "Include AD date",
+  "includeEvents": "Include holidays and reminders",
+  "sectionWidgets": "Widgets",
+  "widgetToday": "Today",
+  "widgetAgenda": "Upcoming",
+  "widgetMonth": "Month",
+  "widgetsHintIos": "Touch and hold your Home Screen or Lock Screen, tap Edit, then Add Widget and search for Patro.",
+  "widgetsHintAndroid": "Tap Add, or long-press your home screen and choose Widgets → Patro.",
+  "widgetPinUnsupported": "Your launcher can't add widgets from apps. Long-press the home screen and choose Widgets.",
+  "sectionBackup": "Backup",
+  "exportNotes": "Export reminders",
+  "exportSubtitle": "Save a backup file to restore on another phone",
+  "importNotes": "Import reminders",
+  "importSubtitle": "Add reminders from a backup file",
+  "exportDone": "{count, plural, =1{Exported 1 reminder} other{Exported {count} reminders}}",
+  "@exportDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importConfirm": "{count, plural, =1{Add 1 reminder from this backup?} other{Add {count} reminders from this backup?}}",
+  "@importConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importDone": "{count, plural, =1{Imported 1 reminder} other{Imported {count} reminders}}",
+  "@importDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "That file isn't a valid Patro backup.",
+  "nothingToExport": "There are no reminders to export yet.",
+  "sectionAbout": "About",
+  "holidayDataYears": "Holiday data: {years} BS",
+  "@holidayDataYears": {
+    "placeholders": {
+      "years": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyNote": "No account needed. Everything stays on this phone.",
+  "holidayDisclaimer": "Holiday dates follow the government calendar and may change if the government announces changes.",
+  "estimated": "Estimated",
+  "estimatedExplain": "The official calendar for {year} isn't published yet. These dates are calculated astronomically and may move by a day.",
+  "@estimatedExplain": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarData": "Calendar data",
+  "calendarDataVerified": "Published calendar through {year} BS; later years are calculated",
+  "@calendarDataVerified": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarDataRevision": "Downloaded update {revision} in use",
+  "@calendarDataRevision": {
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "checkForUpdates": "Check for updates",
+  "calendarDataUpdated": "Calendar data updated",
+  "calendarDataUpToDate": "Calendar data is up to date",
+  "seasonBasanta": "Spring",
+  "seasonGrishma": "Summer",
+  "seasonBarsha": "Monsoon",
+  "seasonSharad": "Autumn",
+  "seasonHemanta": "Early winter",
+  "seasonShishir": "Winter",
+  "photoCredits": "Photo credits",
+  "photoCreditsSubtitle": "Season photos from Wikimedia Commons",
+  "notificationStyle": "Style",
+  "notificationStyleNumber": "Big number",
+  "notificationStylePage": "Desk page",
+  "notificationStyleNumberHint": "Today's day as a large number",
+  "notificationStylePageHint": "A small tear-off calendar page",
+  "notificationStyleMoon": "Moon and tithi",
+  "notificationStyleMoonHint": "Moon phase, tithi and the next aunsi or purnima",
+  "notificationStyleWeek": "This week",
+  "notificationStyleWeekHint": "Sunday to Saturday with today marked",
+  "notificationStyleCountdown": "Next festival",
+  "notificationStyleCountdownHint": "Days left until the next holiday or reminder",
+  "notificationStylePlain": "Plain text",
+  "notificationStylePlainHint": "A standard Android notification",
+  "widgetDesk": "Desk page",
+  "widgetWeek": "This week",
+  "widgetTheme": "Widget theme",
+  "widgetThemePhoto": "Season photo",
+  "widgetThemePhotoHint": "The app's season photo, changes every two months",
+  "widgetThemeMaroon": "Rich maroon",
+  "widgetThemeMaroonHint": "Deep maroon with marigold accents",
+  "widgetThemeMarigold": "Marigold",
+  "widgetThemeMarigoldHint": "Warm marigold with maroon",
+  "widgetThemeCream": "Cream",
+  "widgetThemeCreamHint": "Light and quiet, follows dark mode",
+  "previewSeason": "Preview season",
+  "previewSeasonAuto": "Automatic",
+  "previewSeasonAutoHint": "Follows the calendar"
+}

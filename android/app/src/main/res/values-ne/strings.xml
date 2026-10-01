@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">पात्रो</string>
+    <string name="widget_today_label">आज</string>
+    <string name="widget_today_description">आजको मिति, तिथि र चन्द्रमा</string>
+    <string name="widget_agenda_label">आगामी</string>
+    <string name="widget_agenda_description">आज, र बिदा, पर्व तथा सम्झनासम्म बाँकी दिन</string>
+    <string name="widget_month_label">महिना</string>
+    <string name="widget_month_description">बिदा, आजको तिथि र आगामी पर्वसहित यो महिना</string>
+    <string name="notification_channel_name">आजको मिति</string>
+    <string name="notification_channel_description">सूचना क्षेत्रमा आजको नेपाली मिति देखाउँछ</string>
+    <string name="widget_desk_label">डेस्क पात्रो</string>
+    <string name="widget_desk_description">च्यातिने पात्रोको पानामा आज</string>
+    <string name="widget_week_label">यो हप्ता</string>
+    <string name="widget_week_description">आज र यो हप्ता एकै नजरमा</string>
+</resources>
