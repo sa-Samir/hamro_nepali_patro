@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Week style, expanded: date lines, then Sunday–Saturday with today marked. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/notification_card_forest"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -9,6 +11,7 @@
     <TextView
         android:id="@+id/title"
         style="@style/TextAppearance.Compat.Notification.Title"
+            android:textColor="@color/notification_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -17,6 +20,7 @@
     <TextView
         android:id="@+id/subtitle"
         style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -38,6 +42,7 @@
             <TextView
                 android:id="@+id/w0"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -46,6 +51,7 @@
             <TextView
                 android:id="@+id/d0"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"
@@ -63,6 +69,7 @@
             <TextView
                 android:id="@+id/w1"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -71,6 +78,7 @@
             <TextView
                 android:id="@+id/d1"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"
@@ -88,6 +96,7 @@
             <TextView
                 android:id="@+id/w2"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -96,6 +105,7 @@
             <TextView
                 android:id="@+id/d2"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"
@@ -113,6 +123,7 @@
             <TextView
                 android:id="@+id/w3"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -121,6 +132,7 @@
             <TextView
                 android:id="@+id/d3"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"
@@ -138,6 +150,7 @@
             <TextView
                 android:id="@+id/w4"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -146,6 +159,7 @@
             <TextView
                 android:id="@+id/d4"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"
@@ -163,6 +177,7 @@
             <TextView
                 android:id="@+id/w5"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -171,6 +186,7 @@
             <TextView
                 android:id="@+id/d5"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"
@@ -188,6 +204,7 @@
             <TextView
                 android:id="@+id/w6"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -196,6 +213,7 @@
             <TextView
                 android:id="@+id/d6"
                 style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
                 android:layout_width="34dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="2dp"

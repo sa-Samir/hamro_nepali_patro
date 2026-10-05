@@ -16,6 +16,7 @@
     <TextView
         android:id="@+id/when"
         style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -25,6 +26,7 @@
     <TextView
         android:id="@+id/title"
         style="@style/TextAppearance.Compat.Notification"
+            android:textColor="@color/notification_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

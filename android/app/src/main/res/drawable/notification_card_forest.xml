@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Forest panel behind the notification content; the system still draws the card around it. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:angle="315" android:startColor="#2E4A24" android:endColor="#141C11" />
+    <corners android:radius="16dp" />
+</shape>

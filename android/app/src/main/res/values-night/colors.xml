@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Lime and light tones read on a dark shade / dark widgets. -->
-    <color name="notification_number">#BAD45F</color>
-    <color name="notification_tithi">#D9C98A</color>
-    <color name="notification_holiday">#F2937D</color>
-    <color name="notification_divider">#33FFFFFF</color>
-    <color name="notification_saturday">#D9C98A</color>
     <color name="widget_card">#141C11</color>
     <color name="widget_text">#F9F5F0</color>
     <color name="widget_muted">#A9ABA6</color>
@@ -13,10 +8,6 @@
     <color name="widget_gold">#D9C98A</color>
     <color name="widget_holiday">#F2937D</color>
     <color name="widget_hair">#26FFFFFF</color>
-    <color name="notification_note">#BAD45F</color>
-    <color name="notification_event">#A9ABA6</color>
-    <color name="notification_today_bg">#BAD45F</color>
-    <color name="notification_today_text">#0C1008</color>
     <color name="widget_today_bg">#BAD45F</color>
     <color name="widget_today_text">#0C1008</color>
 </resources>

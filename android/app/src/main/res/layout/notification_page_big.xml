@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Expanded: a larger desk-calendar page, details beside it, events below. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/notification_card_forest"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -26,7 +28,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:textColor="@color/notification_today_text"
+                android:textColor="@color/notification_text"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -37,7 +39,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:textColor="@color/notification_number"
+                android:textColor="@color/notification_page_ink"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -62,6 +64,7 @@
             <TextView
                 android:id="@+id/title"
                 style="@style/TextAppearance.Compat.Notification.Title"
+            android:textColor="@color/notification_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -82,6 +85,7 @@
             <TextView
                 android:id="@+id/subtitle"
                 style="@style/TextAppearance.Compat.Notification.Line2"
+            android:textColor="@color/notification_text_muted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
