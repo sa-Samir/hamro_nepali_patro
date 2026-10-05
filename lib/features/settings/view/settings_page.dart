@@ -32,6 +32,7 @@ class SettingsPage extends StatelessWidget {
     final holidayYears = context.read<HolidayRepository>().years;
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),

@@ -17,6 +17,7 @@ class ConverterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(title: Text(l10n.converterTitle)),
       body: BlocBuilder<ConverterCubit, ConverterState>(
         builder: (context, state) => ListView(

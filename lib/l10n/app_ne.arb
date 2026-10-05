@@ -152,5 +152,15 @@
   "widgetThemeCreamHint": "हल्का र सादा, डार्क मोड अनुसार फेरिन्छ",
   "previewSeason": "ऋतु पूर्वावलोकन",
   "previewSeasonAuto": "स्वचालित",
-  "previewSeasonAutoHint": "पात्रो अनुसार"
+  "previewSeasonAutoHint": "पात्रो अनुसार",
+  "greeting": "नमस्ते",
+  "todayIs": "आज, {date}",
+  "upcomingCount": "आगामी",
+  "quickConvert": "मिति बदल्नुहोस्",
+  "quickReminders": "सम्झनाहरू",
+  "quickWidgets": "विजेट",
+  "remindMe": "सम्झना थप्नुस्",
+  "history": "इतिहास",
+  "edit": "सम्पादन",
+  "nothingUpcoming": "आउँदा केही हप्तामा केही छैन"
 }

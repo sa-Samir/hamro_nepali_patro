@@ -111,16 +111,15 @@ class _DayCell extends StatelessWidget {
 
     final Color dayColor;
     if (isToday) {
-      dayColor = scheme.onPrimary;
+      dayColor = patro.onHighlight;
     } else if (isHoliday) {
       dayColor = patro.holiday;
     } else if (isSaturday) {
       dayColor = patro.accent;
     } else {
-      // Ink, not maroon, so red reads clearly as "holiday".
       dayColor = scheme.onSurface;
     }
-    final adColor = isToday ? scheme.onPrimary.withValues(alpha: 0.85) : patro.muted;
+    final adColor = isToday ? patro.onHighlight.withValues(alpha: 0.7) : patro.muted;
     final ad = date.toAd();
 
     final semantics = [
@@ -129,6 +128,7 @@ class _DayCell extends StatelessWidget {
       for (final e in events) e.title,
     ].join(', ');
 
+    // Every day is a small rounded tile; today is filled, the selection outlined.
     return Semantics(
       button: true,
       selected: isSelected,
@@ -137,16 +137,13 @@ class _DayCell extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Material(
-          color: isToday
-              ? scheme.primary
-              : isSelected
-              ? scheme.secondaryContainer
-              : Colors.transparent,
+          color: isToday ? patro.highlight : patro.card,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: isSelected && !isToday
-                ? BorderSide(color: scheme.primary.withValues(alpha: 0.6), width: 1.2)
-                : BorderSide.none,
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(
+              color: isSelected && !isToday ? patro.highlight : patro.cardBorder,
+              width: isSelected && !isToday ? 1.5 : 1,
+            ),
           ),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
@@ -157,17 +154,17 @@ class _DayCell extends StatelessWidget {
               children: [
                 Text(
                   fmt.number(date.day),
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: dayColor, height: 1.1),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: dayColor, height: 1.1),
                 ),
-                if (showAd) Text(fmt.number(ad.day), style: TextStyle(fontSize: 11.5, color: adColor, height: 1.3)),
+                if (showAd) Text(fmt.number(ad.day), style: TextStyle(fontSize: 10.5, color: adColor, height: 1.3)),
                 const SizedBox(height: 2),
                 SizedBox(
-                  height: 5,
+                  height: 4,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (hasFestival && !isHoliday) _Dot(color: isToday ? scheme.onPrimary : patro.muted),
-                      if (hasNote) _Dot(color: isToday ? scheme.onPrimary : patro.accent),
+                      if (hasFestival && !isHoliday) _Dot(color: isToday ? patro.onHighlight : patro.muted),
+                      if (hasNote) _Dot(color: isToday ? patro.onHighlight : patro.highlight),
                     ],
                   ),
                 ),
@@ -202,7 +199,6 @@ class WeekdayHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     final patro = context.patro;
     return ExcludeSemantics(
       child: Row(
@@ -215,11 +211,7 @@ class WeekdayHeader extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: i == 0
-                        ? scheme.primary
-                        : i == 6
-                        ? patro.accent
-                        : patro.muted,
+                    color: i == 6 ? patro.accent : patro.muted,
                   ),
                 ),
               ),

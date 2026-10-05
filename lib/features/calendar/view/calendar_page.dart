@@ -4,37 +4,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/astro/bs_calculator.dart';
 import '../../../core/bs/bs_date.dart';
-import '../../../core/bs/date_formatter.dart';
 import '../../../core/context_ext.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/glass.dart';
 import '../../../data/remote/calendar_data_cubit.dart';
 import '../../../data/repositories/holiday_repository.dart';
+import '../../home/home_shell.dart';
 import '../../notes/cubit/notes_cubit.dart';
 import '../../notes/view/note_editor_page.dart';
 import '../../settings/cubit/settings_cubit.dart';
-import '../../settings/models/app_settings.dart';
 import '../cubit/calendar_cubit.dart';
 import '../models/day_event.dart';
 import '../models/season.dart';
 import '../widgets/bs_pickers.dart';
 import '../widgets/month_grid.dart';
 
-class CalendarPage extends StatefulWidget {
+/// Space left at the bottom for the floating navigation bar.
+const navClearance = 112.0;
+
+class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});
-
-  @override
-  State<CalendarPage> createState() => _CalendarPageState();
-}
-
-class _CalendarPageState extends State<CalendarPage> {
-  /// Whether the header has scrolled under the status bar.
-  final _scrolled = ValueNotifier(false);
-
-  @override
-  void dispose() {
-    _scrolled.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,62 +34,41 @@ class _CalendarPageState extends State<CalendarPage> {
       notes: context.watch<NotesCubit>().state.notes,
       language: settings.language,
     );
-    final topInset = MediaQuery.paddingOf(context).top;
+    final dark = Theme.of(context).brightness == Brightness.dark;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       child: BlocBuilder<CalendarCubit, CalendarState>(
-        builder: (context, state) => Stack(
-          children: [
-            NotificationListener<ScrollUpdateNotification>(
-              onNotification: (n) {
-                if (n.metrics.axis == Axis.vertical) _scrolled.value = n.metrics.pixels > 8;
-                return false;
-              },
-              child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: _Header(state: state, showTip: !settings.tipDismissed, topInset: topInset),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 12, 8, 8),
-                        child: WeekdayHeader(fmt: context.fmt),
-                      ),
-                    ),
-                    SliverToBoxAdapter(child: Divider(height: 1, color: Theme.of(context).colorScheme.outlineVariant)),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: _MonthPager(state: state, index: index, showAd: settings.showAdInCalendar),
-                      ),
-                    ),
-                    SliverPadding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                      sliver: SliverToBoxAdapter(
-                        child: _DayAndMonthEvents(state: state, index: index),
-                      ),
-                    ),
-                  ],
+        builder: (context, state) {
+          final season = settings.previewSeason ?? Season.ofMonth(state.visibleMonth.month);
+          return SafeArea(
+            bottom: false,
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, navClearance),
+              children: [
+                _GreetingRow(state: state, season: season),
+                const SizedBox(height: 18),
+                _MonthHeading(state: state, season: season),
+                const SizedBox(height: 16),
+                GlassCard(
+                  padding: const EdgeInsets.fromLTRB(8, 14, 8, 8),
+                  child: Column(
+                    children: [
+                      WeekdayHeader(fmt: context.fmt),
+                      const SizedBox(height: 6),
+                      _MonthPager(state: state, index: index, showAd: settings.showAdInCalendar),
+                    ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 16),
+                _DayHeroCard(date: state.selected, events: index.on(state.selected), season: season),
+                const SizedBox(height: 16),
+                const _QuickActions(),
+                const SizedBox(height: 24),
+                _UpcomingSection(state: state, index: index),
+              ],
             ),
-            // Solid status bar once content scrolls under it, so the light
-            // status icons never sit on the cream background.
-            ValueListenableBuilder(
-              valueListenable: _scrolled,
-              builder: (context, scrolled, _) => IgnorePointer(
-                child: AnimatedOpacity(
-                  opacity: scrolled ? 1 : 0,
-                  duration: const Duration(milliseconds: 200),
-                  child: Container(height: topInset, color: context.patro.headerEnd),
-                ),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -109,191 +77,105 @@ class _CalendarPageState extends State<CalendarPage> {
 Future<void> openNoteEditor(BuildContext context, BsDate date) =>
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => NoteEditorPage(initialDate: date)));
 
-class _Header extends StatelessWidget {
-  const _Header({required this.state, required this.showTip, required this.topInset});
+/// "नमस्ते / आज, असोज १९" with a season-photo avatar and header actions.
+class _GreetingRow extends StatelessWidget {
+  const _GreetingRow({required this.state, required this.season});
 
   final CalendarState state;
-  final bool showTip;
-
-  /// Status bar height; the photo extends underneath it.
-  final double topInset;
+  final Season season;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final fmt = context.fmt;
-    final patro = context.patro;
-    final theme = Theme.of(context);
-    final month = state.visibleMonth;
-    final onHeader = patro.onHeader;
+    final p = context.patro;
     final cubit = context.read<CalendarCubit>();
-    // Subtitle in the other language, e.g. "Ashwin 2083" under "असोज".
-    final isNe = fmt.language == AppLanguage.ne;
-    final otherFmt = DateFormatter(
-      language: isNe ? AppLanguage.en : AppLanguage.ne,
-      numerals: isNe ? NumeralStyle.western : NumeralStyle.devanagari,
-    );
-
-    final season = context.select((SettingsCubit c) => c.state.previewSeason) ?? Season.ofMonth(month.month);
-
-    return Stack(
+    final today = state.today;
+    return Row(
       children: [
-        Positioned.fill(child: _SeasonBackdrop(season: season)),
-        Column(
-          children: [
-            SizedBox(height: topInset),
-            if (showTip) const _TipBanner(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${l10n.nepaliCalendar} · ${seasonName(l10n, season)}',
-                              style: theme.textTheme.bodyMedium?.copyWith(color: onHeader.withValues(alpha: 0.9)),
-                            ),
-                            Text(
-                              fmt.monthName(month.month),
-                              style: theme.textTheme.displaySmall?.copyWith(
-                                color: onHeader,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Row(
-                              children: [
-                                Text(
-                                  '${otherFmt.monthName(month.month)} ${otherFmt.number(month.year)}',
-                                  style: theme.textTheme.titleMedium?.copyWith(color: onHeader.withValues(alpha: 0.85)),
-                                ),
-                                if (BsDate.isEstimatedYear(month.year)) ...[
-                                  const SizedBox(width: 10),
-                                  _EstimatedChip(year: month.year),
-                                ],
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      OutlinedButton(
-                        onPressed: state.visibleMonth == state.today.firstOfMonth && state.selected == state.today
-                            ? null
-                            : cubit.goToToday,
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: onHeader,
-                          disabledForegroundColor: onHeader.withValues(alpha: 0.6),
-                          backgroundColor: onHeader.withValues(alpha: 0.12),
-                          side: BorderSide(color: onHeader.withValues(alpha: 0.35)),
-                          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-                        ),
-                        child: Text(l10n.today),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      _RoundButton(
-                        icon: Icons.chevron_left,
-                        tooltip: l10n.previousMonth,
-                        onPressed: cubit.previousMonth,
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(12),
-                          onTap: () async {
-                            final picked = await showMonthPicker(context, month);
-                            if (picked != null) cubit.showMonth(picked);
-                          },
-                          child: Semantics(
-                            button: true,
-                            label: l10n.goToMonth,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        fmt.number(month.year),
-                                        style: theme.textTheme.titleLarge?.copyWith(
-                                          color: onHeader,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      Icon(Icons.arrow_drop_down, color: onHeader.withValues(alpha: 0.8)),
-                                    ],
-                                  ),
-                                  Text(
-                                    fmt.adSpan(month),
-                                    style: theme.textTheme.bodySmall?.copyWith(color: onHeader.withValues(alpha: 0.8)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      _RoundButton(icon: Icons.chevron_right, tooltip: l10n.nextMonth, onPressed: cubit.nextMonth),
-                    ],
-                  ),
-                ],
+        CircleAvatar(radius: 22, backgroundImage: AssetImage(season.asset)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.greeting, style: TextStyle(color: p.muted, fontSize: 13)),
+              Text(
+                l10n.todayIs('${fmt.monthName(today.month)} ${fmt.number(today.day)}, ${fmt.number(today.year)}'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
-            ),
-          ],
+            ],
+          ),
+        ),
+        RoundIconButton(icon: Icons.today_outlined, tooltip: l10n.today, onPressed: cubit.goToToday),
+        const SizedBox(width: 8),
+        RoundIconButton(
+          icon: Icons.calendar_view_month_outlined,
+          tooltip: l10n.goToMonth,
+          onPressed: () async {
+            final picked = await showMonthPicker(context, state.visibleMonth);
+            if (picked != null) cubit.showMonth(picked);
+          },
         ),
       ],
     );
   }
 }
 
-/// The season's photo, darkened towards the brand maroon so white text stays
-/// readable on any picture. Cross-fades when the season changes.
-class _SeasonBackdrop extends StatelessWidget {
-  const _SeasonBackdrop({required this.season});
+/// Large serif month + year, AD span and season, with month arrows.
+class _MonthHeading extends StatelessWidget {
+  const _MonthHeading({required this.state, required this.season});
 
+  final CalendarState state;
   final Season season;
 
   @override
   Widget build(BuildContext context) {
-    final patro = context.patro;
-    return Stack(
-      fit: StackFit.expand,
+    final l10n = context.l10n;
+    final fmt = context.fmt;
+    final p = context.patro;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    final cubit = context.read<CalendarCubit>();
+    final month = state.visibleMonth;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 600),
-          child: Image.asset(
-            season.asset,
-            key: ValueKey(season),
-            fit: BoxFit.cover,
-            alignment: season.focus,
-            width: double.infinity,
-            height: double.infinity,
-            excludeFromSemantics: true,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: '${fmt.monthName(month.month)} '),
+                    TextSpan(
+                      text: fmt.number(month.year),
+                      style: TextStyle(fontStyle: FontStyle.italic, color: p.muted),
+                    ),
+                  ],
+                ),
+                style: serif(46, onSurface, height: 1.05),
+              ),
+              const SizedBox(height: 4),
+              Wrap(
+                spacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    '${fmt.adSpan(month)} · ${seasonName(l10n, season)}',
+                    style: TextStyle(color: p.muted, fontSize: 13),
+                  ),
+                  if (BsDate.isEstimatedYear(month.year)) _EstimatedChip(year: month.year),
+                ],
+              ),
+            ],
           ),
         ),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withValues(alpha: 0.45),
-                patro.headerStart.withValues(alpha: 0.5),
-                patro.headerEnd.withValues(alpha: 0.9),
-              ],
-              stops: const [0, 0.45, 1],
-            ),
-          ),
-        ),
+        RoundIconButton(icon: Icons.chevron_left, tooltip: l10n.previousMonth, onPressed: cubit.previousMonth),
+        const SizedBox(width: 8),
+        RoundIconButton(icon: Icons.chevron_right, tooltip: l10n.nextMonth, onPressed: cubit.nextMonth),
       ],
     );
   }
@@ -308,7 +190,7 @@ class _EstimatedChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final onHeader = context.patro.onHeader;
+    final p = context.patro;
     return Tooltip(
       message: l10n.estimatedExplain(context.fmt.number(year)),
       triggerMode: TooltipTriggerMode.tap,
@@ -316,77 +198,18 @@ class _EstimatedChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(
-          border: Border.all(color: onHeader.withValues(alpha: 0.5)),
+          color: p.card,
+          border: Border.all(color: p.cardBorder),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.info_outline, size: 13, color: onHeader.withValues(alpha: 0.85)),
+            Icon(Icons.info_outline, size: 13, color: p.muted),
             const SizedBox(width: 4),
-            Text(l10n.estimated, style: TextStyle(color: onHeader.withValues(alpha: 0.85), fontSize: 12)),
+            Text(l10n.estimated, style: TextStyle(color: p.muted, fontSize: 12)),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _RoundButton extends StatelessWidget {
-  const _RoundButton({required this.icon, required this.tooltip, required this.onPressed});
-
-  final IconData icon;
-  final String tooltip;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final onHeader = context.patro.onHeader;
-    return IconButton(
-      tooltip: tooltip,
-      onPressed: onPressed,
-      iconSize: 28,
-      style: IconButton.styleFrom(
-        backgroundColor: onHeader.withValues(alpha: 0.14),
-        foregroundColor: onHeader,
-        fixedSize: const Size(52, 52),
-      ),
-      icon: Icon(icon),
-    );
-  }
-}
-
-class _TipBanner extends StatelessWidget {
-  const _TipBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    final patro = context.patro;
-    return Container(
-      width: double.infinity,
-      color: patro.tipBackground,
-      padding: const EdgeInsets.fromLTRB(16, 12, 4, 12),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: Colors.white.withValues(alpha: 0.25),
-            child: const Icon(Icons.campaign_outlined, color: Colors.white, size: 20),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              context.l10n.tipNewFeature,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, height: 1.35),
-            ),
-          ),
-          IconButton(
-            tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-            color: Colors.white,
-            onPressed: () => context.read<SettingsCubit>().update((s) => s.copyWith(tipDismissed: true)),
-            icon: const Icon(Icons.close),
-          ),
-        ],
       ),
     );
   }
@@ -408,7 +231,7 @@ class _MonthPagerState extends State<_MonthPager> {
 
   var _animating = false;
 
-  double get _cellHeight => widget.showAd ? 60 : 50;
+  double get _cellHeight => widget.showAd ? 54 : 46;
 
   @override
   void didUpdateWidget(covariant _MonthPager oldWidget) {
@@ -449,30 +272,212 @@ class _MonthPagerState extends State<_MonthPager> {
         onPageChanged: (i) {
           if (!_animating) cubit.showMonth(monthAtIndex(i));
         },
-        itemBuilder: (context, i) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: MonthGrid(
-            month: monthAtIndex(i),
-            today: widget.state.today,
-            selected: widget.state.selected,
-            fmt: fmt,
-            showAd: widget.showAd,
-            cellHeight: _cellHeight,
-            eventsOf: widget.index.on,
-            onSelect: cubit.select,
-            onLongPress: (d) {
-              cubit.select(d);
-              openNoteEditor(context, d);
-            },
-          ),
+        itemBuilder: (context, i) => MonthGrid(
+          month: monthAtIndex(i),
+          today: widget.state.today,
+          selected: widget.state.selected,
+          fmt: fmt,
+          showAd: widget.showAd,
+          cellHeight: _cellHeight,
+          eventsOf: widget.index.on,
+          onSelect: cubit.select,
+          onLongPress: (d) {
+            cubit.select(d);
+            openNoteEditor(context, d);
+          },
         ),
       ),
     );
   }
 }
 
-class _DayAndMonthEvents extends StatelessWidget {
-  const _DayAndMonthEvents({required this.state, required this.index});
+/// The selected day on the season photo: date, tithi, its events and a
+/// single "add reminder" pill.
+class _DayHeroCard extends StatelessWidget {
+  const _DayHeroCard({required this.date, required this.events, required this.season});
+
+  final BsDate date;
+  final List<DayEvent> events;
+  final Season season;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final fmt = context.fmt;
+    final p = context.patro;
+    const onPhoto = Color(0xFFF9F5F0);
+    final tithi = fmt.tithi(const BsCalculator().tithiOn(date.toAd()));
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(28),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(season.asset, fit: BoxFit.cover, alignment: season.focus, excludeFromSemantics: true),
+          ),
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.black.withValues(alpha: 0.25), p.headerEnd.withValues(alpha: 0.92)],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            fmt.weekday(date.weekday),
+                            style: TextStyle(color: onPhoto.withValues(alpha: 0.8), fontSize: 13),
+                          ),
+                          Text(fmt.bsDate(date), style: serif(30, onPhoto)),
+                          Text(
+                            fmt.adDateFull(date.toAd()),
+                            style: TextStyle(color: onPhoto.withValues(alpha: 0.8), fontSize: 13),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(fmt.number(date.day), style: serif(64, onPhoto, height: 0.9)),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    _PhotoChip(icon: Icons.brightness_3_outlined, label: tithi, highlighted: true),
+                    for (final e in events)
+                      _PhotoChip(
+                        icon: switch (e.kind) {
+                          DayEventKind.holiday => Icons.celebration_outlined,
+                          DayEventKind.festival => Icons.temple_hindu_outlined,
+                          DayEventKind.note => Icons.notifications_active_outlined,
+                        },
+                        label: e.title,
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () => openNoteEditor(context, date),
+                    style: FilledButton.styleFrom(backgroundColor: onPhoto, foregroundColor: const Color(0xFF0C1008)),
+                    icon: const Icon(Icons.notification_add_outlined, size: 20),
+                    label: Text(l10n.remindMe),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PhotoChip extends StatelessWidget {
+  const _PhotoChip({required this.icon, required this.label, this.highlighted = false});
+
+  final IconData icon;
+  final String label;
+  final bool highlighted;
+
+  @override
+  Widget build(BuildContext context) {
+    // Lime reads well on the dark photo wash in both light and dark mode.
+    const lime = Color(0xFFBAD45F);
+    final fill = highlighted ? lime : Colors.white.withValues(alpha: 0.16);
+    final ink = highlighted ? const Color(0xFF0C1008) : const Color(0xFFF9F5F0);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      decoration: BoxDecoration(
+        color: fill,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.white.withValues(alpha: highlighted ? 0 : 0.18)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 15, color: ink),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: ink, fontSize: 13, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Three square tiles for the most common jumps.
+class _QuickActions extends StatelessWidget {
+  const _QuickActions();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final p = context.patro;
+    final actions = [
+      (Icons.swap_horiz, l10n.quickConvert, HomeTab.converter),
+      (Icons.notifications_none, l10n.quickReminders, HomeTab.reminders),
+      (Icons.widgets_outlined, l10n.quickWidgets, HomeTab.settings),
+    ];
+    return Row(
+      children: [
+        for (var i = 0; i < actions.length; i++) ...[
+          if (i > 0) const SizedBox(width: 10),
+          Expanded(
+            child: GlassCard(
+              padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
+              onTap: () => HomeShell.show(context, actions[i].$3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(color: p.highlight.withValues(alpha: 0.18), shape: BoxShape.circle),
+                    child: Icon(actions[i].$1, size: 20, color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    actions[i].$2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Next holidays, festivals and reminders from today; when another month is
+/// on screen, that month's events instead.
+class _UpcomingSection extends StatelessWidget {
+  const _UpcomingSection({required this.state, required this.index});
 
   final CalendarState state;
   final EventIndex index;
@@ -481,98 +486,55 @@ class _DayAndMonthEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final fmt = context.fmt;
-    final theme = Theme.of(context);
-    final holidays = context.read<HolidayRepository>();
     final month = state.visibleMonth;
-    final monthEvents = index.between(month, BsDate(month.year, month.month, month.daysInThisMonth));
-    final dayEvents = monthEvents.where((e) => e.date == state.selected).toList();
-    final hasHolidayData = holidays.years.contains(month.year);
-
+    final browsingOtherMonth = !month.isSameMonth(state.today);
+    final events = browsingOtherMonth
+        ? index.between(month, BsDate(month.year, month.month, month.daysInThisMonth))
+        : index.between(state.today, state.today.addDays(45)).take(6).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 4, 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            fmt.bsDateWithWeekday(state.selected),
-                            style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            fmt.adDateLong(state.selected.toAd()),
-                            style: theme.textTheme.bodyMedium?.copyWith(color: context.patro.muted),
-                          ),
-                          Text(
-                            fmt.tithi(const BsCalculator().tithiOn(state.selected.toAd())),
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: context.patro.accent,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      tooltip: l10n.addReminderOnDate,
-                      color: context.patro.muted,
-                      onPressed: () => openNoteEditor(context, state.selected),
-                      icon: const Icon(Icons.notification_add_outlined),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                if (dayEvents.isEmpty)
-                  Text(l10n.nothingOnThisDay, style: theme.textTheme.bodyMedium?.copyWith(color: context.patro.muted))
-                else
-                  for (final e in dayEvents) _EventTile(event: e, showDate: false),
-              ],
-            ),
-          ),
+        SectionHeader(
+          title: browsingOtherMonth ? fmt.bsMonthYear(month.year, month.month) : l10n.upcomingCount,
+          count: events.isEmpty ? null : fmt.number(events.length),
         ),
-        const SizedBox(height: 20),
-        Text(l10n.thisMonth, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-        const SizedBox(height: 6),
-        if (!hasHolidayData)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6),
-            child: Text(
-              l10n.holidayDataMissing(fmt.number(month.year)),
-              style: theme.textTheme.bodySmall?.copyWith(color: context.patro.muted),
+        const SizedBox(height: 8),
+        if (events.isEmpty)
+          Text(l10n.nothingUpcoming, style: TextStyle(color: context.patro.muted))
+        else
+          for (final e in events)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: EventCard(event: e, today: state.today),
             ),
-          ),
-        for (final e in monthEvents) _EventTile(event: e, showDate: true),
       ],
     );
   }
 }
 
-class _EventTile extends StatelessWidget {
-  const _EventTile({required this.event, required this.showDate});
+/// A holiday, festival or reminder: date tile, title, when, countdown pill.
+class EventCard extends StatelessWidget {
+  const EventCard({super.key, required this.event, required this.today});
 
   final DayEvent event;
-  final bool showDate;
+  final BsDate today;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final fmt = context.fmt;
-    final patro = context.patro;
-    final scheme = Theme.of(context).colorScheme;
-    final color = switch (event.kind) {
-      DayEventKind.holiday => patro.holiday,
-      DayEventKind.festival => patro.muted,
-      DayEventKind.note => patro.accent,
+    final p = context.patro;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    final days = today.daysUntil(event.date);
+    final isHoliday = event.kind == DayEventKind.holiday;
+    final soon = days >= 0 && days <= 7;
+    final when = switch (days) {
+      0 => l10n.today,
+      > 0 => fmt.digits(l10n.inDays(days)),
+      _ => fmt.digits(l10n.daysAgo(-days)),
     };
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
+    return GlassCard(
+      padding: const EdgeInsets.all(12),
       onTap: () {
         if (event.note != null) {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => NoteEditorPage(note: event.note)));
@@ -580,43 +542,76 @@ class _EventTile extends StatelessWidget {
           context.read<CalendarCubit>().select(event.date);
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
-        child: Row(
-          children: [
-            Container(
-              width: 4,
-              height: 32,
-              decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2)),
+      child: Row(
+        children: [
+          Container(
+            width: 52,
+            height: 56,
+            decoration: BoxDecoration(
+              color: isHoliday ? p.holiday.withValues(alpha: 0.16) : p.highlight.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(16),
             ),
-            const SizedBox(width: 10),
-            if (showDate) ...[
-              SizedBox(
-                width: 36,
-                child: Text(
-                  fmt.number(event.date.day),
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: color),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(fmt.number(event.date.day), style: serif(24, isHoliday ? p.holiday : onSurface, height: 1)),
+                Text(
+                  fmt.monthName(event.date.month),
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  style: TextStyle(fontSize: 10.5, color: p.muted),
                 ),
-              ),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(event.title, style: const TextStyle(fontWeight: FontWeight.w600)),
-                  Text(
-                    event.kind == DayEventKind.holiday
-                        ? '${fmt.weekday(event.date.weekday)} · ${context.l10n.publicHoliday}'
-                        : fmt.weekday(event.date.weekday),
-                    style: TextStyle(fontSize: 12.5, color: patro.muted),
-                  ),
-                ],
-              ),
+              ],
             ),
-            if (event.kind == DayEventKind.note)
-              Icon(Icons.notifications_active_outlined, size: 18, color: scheme.primary),
-          ],
-        ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  event.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Icon(Icons.event_outlined, size: 14, color: p.muted),
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        '${fmt.weekday(event.date.weekday)} · ${fmt.adDate(event.date.toAd())}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12.5, color: p.muted),
+                      ),
+                    ),
+                  ],
+                ),
+                if (isHoliday) ...[
+                  const SizedBox(height: 2),
+                  Text(l10n.publicHoliday, style: TextStyle(fontSize: 12, color: p.holiday)),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: soon ? p.highlight : p.card,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: p.cardBorder),
+            ),
+            child: Text(
+              when,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: soon ? p.onHighlight : onSurface),
+            ),
+          ),
+        ],
       ),
     );
   }

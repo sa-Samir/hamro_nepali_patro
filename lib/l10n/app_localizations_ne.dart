@@ -527,4 +527,36 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get previewSeasonAutoHint => 'पात्रो अनुसार';
+
+  @override
+  String get greeting => 'नमस्ते';
+
+  @override
+  String todayIs(String date) {
+    return 'आज, $date';
+  }
+
+  @override
+  String get upcomingCount => 'आगामी';
+
+  @override
+  String get quickConvert => 'मिति बदल्नुहोस्';
+
+  @override
+  String get quickReminders => 'सम्झनाहरू';
+
+  @override
+  String get quickWidgets => 'विजेट';
+
+  @override
+  String get remindMe => 'सम्झना थप्नुस्';
+
+  @override
+  String get history => 'इतिहास';
+
+  @override
+  String get edit => 'सम्पादन';
+
+  @override
+  String get nothingUpcoming => 'आउँदा केही हप्तामा केही छैन';
 }

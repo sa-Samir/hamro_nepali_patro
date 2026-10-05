@@ -556,4 +556,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get previewSeasonAutoHint => 'Follows the calendar';
+
+  @override
+  String get greeting => 'Namaste';
+
+  @override
+  String todayIs(String date) {
+    return 'Today, $date';
+  }
+
+  @override
+  String get upcomingCount => 'Upcoming';
+
+  @override
+  String get quickConvert => 'Convert date';
+
+  @override
+  String get quickReminders => 'Reminders';
+
+  @override
+  String get quickWidgets => 'Widgets';
+
+  @override
+  String get remindMe => 'Add reminder';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get nothingUpcoming => 'Nothing in the next few weeks';
 }

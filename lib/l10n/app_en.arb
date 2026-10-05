@@ -266,5 +266,22 @@
   "widgetThemeCreamHint": "Light and quiet, follows dark mode",
   "previewSeason": "Preview season",
   "previewSeasonAuto": "Automatic",
-  "previewSeasonAutoHint": "Follows the calendar"
+  "previewSeasonAutoHint": "Follows the calendar",
+  "greeting": "Namaste",
+  "todayIs": "Today, {date}",
+  "@todayIs": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "upcomingCount": "Upcoming",
+  "quickConvert": "Convert date",
+  "quickReminders": "Reminders",
+  "quickWidgets": "Widgets",
+  "remindMe": "Add reminder",
+  "history": "History",
+  "edit": "Edit",
+  "nothingUpcoming": "Nothing in the next few weeks"
 }

@@ -85,6 +85,9 @@ class DateFormatter {
   /// "Wednesday, September 30, 2026" in the active language.
   String adDateLong(DateTime date) => digits(DateFormat.yMMMMEEEEd(language.name).format(date));
 
+  /// "September 30, 2026", without the weekday.
+  String adDateFull(DateTime date) => digits(DateFormat.yMMMMd(language.name).format(date));
+
   /// "Sep 30, 2026".
   String adDate(DateTime date) => digits(DateFormat.yMMMd(language.name).format(date));
 

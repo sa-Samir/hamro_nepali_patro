@@ -1015,6 +1015,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Follows the calendar'**
   String get previewSeasonAutoHint;
+
+  /// No description provided for @greeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Namaste'**
+  String get greeting;
+
+  /// No description provided for @todayIs.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, {date}'**
+  String todayIs(String date);
+
+  /// No description provided for @upcomingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcomingCount;
+
+  /// No description provided for @quickConvert.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert date'**
+  String get quickConvert;
+
+  /// No description provided for @quickReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get quickReminders;
+
+  /// No description provided for @quickWidgets.
+  ///
+  /// In en, this message translates to:
+  /// **'Widgets'**
+  String get quickWidgets;
+
+  /// No description provided for @remindMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Add reminder'**
+  String get remindMe;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @nothingUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the next few weeks'**
+  String get nothingUpcoming;
 }
 
 class _AppLocalizationsDelegate
