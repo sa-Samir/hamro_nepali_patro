@@ -169,11 +169,16 @@ class ReminderPreview extends StatelessWidget {
 
 /// Android-style notification card.
 class _NotificationShell extends StatelessWidget {
-  const _NotificationShell({required this.child, this.trailing, this.icon});
+  const _NotificationShell({required this.child, this.trailing, this.icon, this.panel = false});
 
   final Widget child;
   final String? trailing;
   final Widget? icon;
+
+  /// Draw [child] on the light-green panel the real notification uses
+  /// (android res/drawable/notification_card_forest.xml). Android draws the
+  /// card around it itself, so only the panel can be coloured.
+  final bool panel;
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +186,11 @@ class _NotificationShell extends StatelessWidget {
     final p = context.patro;
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
-      decoration: BoxDecoration(color: scheme.surfaceContainerHigh, borderRadius: BorderRadius.circular(22)),
+      decoration: BoxDecoration(
+        // The system draws this card; on the phone it is a neutral grey.
+        color: panel ? const Color(0xFFEDEDEB) : scheme.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(22),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -200,7 +209,18 @@ class _NotificationShell extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          child,
+          if (panel)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(color: const Color(0xFFDCE8CD), borderRadius: BorderRadius.circular(16)),
+              child: DefaultTextStyle.merge(
+                style: const TextStyle(color: Color(0xFF141A11)),
+                child: child,
+              ),
+            )
+          else
+            child,
         ],
       ),
     );
@@ -213,8 +233,15 @@ class NotificationPreview extends StatelessWidget {
 
   final AppSettings settings;
 
+  // The real notification's panel and text colours are fixed, so the
+  // preview always uses the light palette.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Theme(
+    data: AppTheme.light(),
+    child: Builder(builder: _content),
+  );
+
+  Widget _content(BuildContext context) {
     final p = context.patro;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     final t = _Today(context, settings);
@@ -357,6 +384,7 @@ class NotificationPreview extends StatelessWidget {
     return Opacity(
       opacity: settings.todayNotification ? 1 : 0.45,
       child: _NotificationShell(
+        panel: settings.todayNotificationStyle != TodayNotificationStyle.plain,
         icon: Container(
           width: 18,
           height: 18,

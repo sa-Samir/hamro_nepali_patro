@@ -9,15 +9,15 @@
     <color name="patro_on_surface">#2B1A14</color>
     <color name="patro_muted">#8A6A5A</color>
     <color name="patro_holiday">#B3261E</color>
-    <!-- Notification content sits on a fixed forest-green panel (no night overrides). -->
-    <color name="notification_holiday">#F2937D</color>
-    <color name="notification_note">#BAD45F</color>
-    <color name="notification_event">#A9ABA6</color>
-    <color name="notification_tithi">#D9C98A</color>
-    <color name="notification_number">#BAD45F</color>
-    <color name="notification_divider">#26FFFFFF</color>
+    <!-- Notification content sits on a fixed light-green panel (no night overrides). -->
+    <color name="notification_holiday">#C4472F</color>
+    <color name="notification_note">#2E4A24</color>
+    <color name="notification_event">#7C8579</color>
+    <color name="notification_tithi">#7A5F14</color>
+    <color name="notification_number">#2E4A24</color>
+    <color name="notification_divider">#1F000000</color>
 	<color name="ic_launcher_background">#2E4A24</color>
-    <color name="notification_saturday">#D9C98A</color>
+    <color name="notification_saturday">#7A5F14</color>
     <!-- Home-screen widgets (dark versions in values-night). -->
     <color name="widget_card">#F7F4EE</color>
     <color name="widget_text">#141A11</color>
@@ -27,15 +27,15 @@
     <color name="widget_holiday">#C4472F</color>
     <color name="widget_hair">#DCE3D5</color>
     <color name="notification_accent">#2E4A24</color>
-    <color name="notification_today_bg">#BAD45F</color>
-    <color name="notification_today_text">#0C1008</color>
+    <color name="notification_today_bg">#2E4A24</color>
+    <color name="notification_today_text">#F9F5F0</color>
     <color name="widget_today_bg">#2E4A24</color>
     <color name="widget_today_text">#F9F5F0</color>
     <color name="forest_card">#141C11</color>
     <color name="forest_lime">#BAD45F</color>
     <color name="forest_ink">#0C1008</color>
     <color name="maroon">#7A1F1F</color>
-    <color name="notification_text">#F9F5F0</color>
-    <color name="notification_text_muted">#C3CBBE</color>
+    <color name="notification_text">#141A11</color>
+    <color name="notification_text_muted">#4F5A4B</color>
     <color name="notification_page_ink">#2E4A24</color>
 </resources>
