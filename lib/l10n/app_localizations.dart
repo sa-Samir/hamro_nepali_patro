@@ -1075,6 +1075,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing in the next few weeks'**
   String get nothingUpcoming;
+
+  /// No description provided for @statYears.
+  ///
+  /// In en, this message translates to:
+  /// **'Years'**
+  String get statYears;
+
+  /// No description provided for @statMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Months'**
+  String get statMonths;
+
+  /// No description provided for @statDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get statDays;
+
+  /// No description provided for @switchDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch direction'**
+  String get switchDirection;
+
+  /// No description provided for @changeDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Change date'**
+  String get changeDate;
+
+  /// No description provided for @statHolidayData.
+  ///
+  /// In en, this message translates to:
+  /// **'Holiday data'**
+  String get statHolidayData;
+
+  /// No description provided for @statVerifiedThrough.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified to'**
+  String get statVerifiedThrough;
+
+  /// No description provided for @remindShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get remindShort;
 }
 
 class _AppLocalizationsDelegate

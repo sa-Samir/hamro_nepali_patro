@@ -588,4 +588,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nothingUpcoming => 'Nothing in the next few weeks';
+
+  @override
+  String get statYears => 'Years';
+
+  @override
+  String get statMonths => 'Months';
+
+  @override
+  String get statDays => 'Days';
+
+  @override
+  String get switchDirection => 'Switch direction';
+
+  @override
+  String get changeDate => 'Change date';
+
+  @override
+  String get statHolidayData => 'Holiday data';
+
+  @override
+  String get statVerifiedThrough => 'Verified to';
+
+  @override
+  String get remindShort => 'Remind me';
 }

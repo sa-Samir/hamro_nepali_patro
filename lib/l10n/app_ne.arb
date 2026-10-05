@@ -162,5 +162,13 @@
   "remindMe": "सम्झना थप्नुस्",
   "history": "इतिहास",
   "edit": "सम्पादन",
-  "nothingUpcoming": "आउँदा केही हप्तामा केही छैन"
+  "nothingUpcoming": "आउँदा केही हप्तामा केही छैन",
+  "statYears": "वर्ष",
+  "statMonths": "महिना",
+  "statDays": "दिन",
+  "switchDirection": "दिशा बदल्नुहोस्",
+  "changeDate": "मिति बदल्नुहोस्",
+  "statHolidayData": "बिदा विवरण",
+  "statVerifiedThrough": "प्रमाणित",
+  "remindShort": "सम्झाउनुस्"
 }

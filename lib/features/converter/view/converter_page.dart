@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -6,6 +7,7 @@ import '../../../core/astro/bs_calculator.dart';
 import '../../../core/bs/bs_date.dart';
 import '../../../core/context_ext.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/glass.dart';
 import '../../calendar/view/calendar_page.dart';
 import '../../calendar/widgets/bs_pickers.dart';
 import '../cubit/converter_cubit.dart';
@@ -16,35 +18,91 @@ class ConverterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(title: Text(l10n.converterTitle)),
-      body: BlocBuilder<ConverterCubit, ConverterState>(
-        builder: (context, state) => ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          children: [
-            SegmentedButton<ConversionDirection>(
-              segments: [
-                ButtonSegment(value: ConversionDirection.bsToAd, label: Text(l10n.bsToAd)),
-                ButtonSegment(value: ConversionDirection.adToBs, label: Text(l10n.adToBs)),
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      child: BlocBuilder<ConverterCubit, ConverterState>(
+        builder: (context, state) {
+          final cubit = context.read<ConverterCubit>();
+          final isBs = state.direction == ConversionDirection.bsToAd;
+          return SafeArea(
+            bottom: false,
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, navClearance),
+              children: [
+                PageTitle(title: l10n.converterTitle),
+                const SizedBox(height: 16),
+                PillToggle<ConversionDirection>(
+                  options: [(ConversionDirection.bsToAd, l10n.bsToAd), (ConversionDirection.adToBs, l10n.adToBs)],
+                  selected: state.direction,
+                  onChanged: cubit.setDirection,
+                ),
+                const SizedBox(height: 16),
+                _InputCard(state: state),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: _SwapButton(
+                      tooltip: l10n.switchDirection,
+                      onPressed: () =>
+                          cubit.setDirection(isBs ? ConversionDirection.adToBs : ConversionDirection.bsToAd),
+                    ),
+                  ),
+                ),
+                _ResultCard(state: state),
+                const SizedBox(height: 28),
+                SectionHeader(title: l10n.daysBetweenTitle),
+                const SizedBox(height: 10),
+                _DaysBetweenCard(state: state),
               ],
-              selected: {state.direction},
-              showSelectedIcon: false,
-              onSelectionChanged: (s) => context.read<ConverterCubit>().setDirection(s.first),
             ),
-            const SizedBox(height: 16),
-            _InputCard(state: state),
-            const SizedBox(height: 12),
-            _ResultCard(state: state),
-            const SizedBox(height: 28),
-            _DaysBetweenCard(state: state),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
 
+/// Filled round button with a vertical swap arrow.
+class _SwapButton extends StatelessWidget {
+  const _SwapButton({required this.tooltip, required this.onPressed});
+
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.patro;
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      style: IconButton.styleFrom(
+        backgroundColor: p.highlight,
+        foregroundColor: p.onHighlight,
+        fixedSize: const Size.square(48),
+      ),
+      icon: const Icon(Icons.swap_vert),
+    );
+  }
+}
+
+Future<void> _pickDate(BuildContext context, ConverterState state, {required bool bs}) async {
+  final cubit = context.read<ConverterCubit>();
+  if (bs) {
+    final picked = await showBsDatePicker(context, initial: state.date);
+    if (picked != null) cubit.setBsDate(picked);
+  } else {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: state.date.toAd(),
+      firstDate: BsDate.minAd,
+      lastDate: BsDate.maxAd,
+    );
+    if (picked != null) cubit.setAdDate(picked);
+  }
+}
+
+/// The date being converted, in the source calendar; tap to change it.
 class _InputCard extends StatelessWidget {
   const _InputCard({required this.state});
 
@@ -54,38 +112,40 @@ class _InputCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final fmt = context.fmt;
-    final cubit = context.read<ConverterCubit>();
+    final p = context.patro;
     final isBs = state.direction == ConversionDirection.bsToAd;
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: const Icon(Icons.edit_calendar_outlined),
-        title: Text(isBs ? l10n.bsDateLabel : l10n.adDateLabel, style: TextStyle(color: context.patro.muted)),
-        subtitle: Text(
-          isBs ? fmt.bsDateWithWeekday(state.date) : fmt.adDateLong(state.date.toAd()),
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-        ),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () async {
-          if (isBs) {
-            final picked = await showBsDatePicker(context, initial: state.date);
-            if (picked != null) cubit.setBsDate(picked);
-          } else {
-            final picked = await showDatePicker(
-              context: context,
-              initialDate: state.date.toAd(),
-              firstDate: BsDate.minAd,
-              lastDate: BsDate.maxAd,
-            );
-            if (picked != null) cubit.setAdDate(picked);
-          }
-        },
+    final ad = state.date.toAd();
+    return GlassCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 12, 16),
+      onTap: () => _pickDate(context, state, bs: isBs),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(isBs ? l10n.bsDateLabel : l10n.adDateLabel, style: TextStyle(color: p.muted, fontSize: 13)),
+                const SizedBox(height: 4),
+                Text(
+                  isBs ? fmt.bsDate(state.date) : fmt.adDateFull(ad),
+                  style: serif(30, Theme.of(context).colorScheme.onSurface),
+                ),
+                Text(fmt.weekday(state.date.weekday), style: TextStyle(color: p.muted, fontSize: 13)),
+              ],
+            ),
+          ),
+          RoundIconButton(
+            icon: Icons.edit_calendar_outlined,
+            tooltip: l10n.changeDate,
+            onPressed: () => _pickDate(context, state, bs: isBs),
+          ),
+        ],
       ),
     );
   }
 }
 
+/// The converted date on a deep forest card, with tithi and quick actions.
 class _ResultCard extends StatelessWidget {
   const _ResultCard({required this.state});
 
@@ -95,8 +155,9 @@ class _ResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final fmt = context.fmt;
-    final patro = context.patro;
-    final theme = Theme.of(context);
+    final p = context.patro;
+    const ink = Color(0xFFF9F5F0);
+    const lime = Color(0xFFBAD45F);
     final isBs = state.direction == ConversionDirection.bsToAd;
     final ad = state.date.toAd();
     final days = state.daysFromToday;
@@ -105,69 +166,113 @@ class _ResultCard extends StatelessWidget {
       > 0 => fmt.digits(l10n.inDays(days)),
       _ => fmt.digits(l10n.daysAgo(-days)),
     };
-    final primary = isBs ? fmt.adDateLong(ad) : fmt.bsDate(state.date);
-    final secondary = isBs ? fmt.bsDateWithWeekday(state.date) : fmt.weekday(state.date.weekday);
+
+    Widget chip(String text, {bool filled = false, IconData? icon}) => Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      decoration: BoxDecoration(
+        color: filled ? lime : Colors.white.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.white.withValues(alpha: filled ? 0 : 0.16)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 15, color: filled ? const Color(0xFF0C1008) : ink),
+            const SizedBox(width: 6),
+          ],
+          Text(
+            text,
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: filled ? const Color(0xFF0C1008) : ink),
+          ),
+        ],
+      ),
+    );
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [patro.headerStart, patro.headerEnd]),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(28),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [p.headerStart, p.headerEnd],
+        ),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 18, 12, 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.convertedDate, style: TextStyle(color: patro.onHeader.withValues(alpha: 0.8))),
-          const SizedBox(height: 6),
-          Semantics(
-            liveRegion: true,
-            child: Text(
-              primary,
-              style: theme.textTheme.headlineSmall?.copyWith(color: patro.onHeader, fontWeight: FontWeight.w800),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(28),
+          gradient: RadialGradient(
+            center: const Alignment(0.9, -1),
+            radius: 1.2,
+            colors: [lime.withValues(alpha: 0.18), lime.withValues(alpha: 0)],
+          ),
+        ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.convertedDate, style: TextStyle(color: ink.withValues(alpha: 0.7), fontSize: 13)),
+            const SizedBox(height: 4),
+            Semantics(
+              liveRegion: true,
+              child: Text(isBs ? fmt.adDateFull(ad) : fmt.bsDate(state.date), style: serif(34, ink)),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(secondary, style: TextStyle(color: patro.onHeader.withValues(alpha: 0.85))),
-          Text(
-            fmt.tithi(const BsCalculator().tithiOn(ad)),
-            style: TextStyle(color: patro.onHeader.withValues(alpha: 0.85)),
-          ),
-          if (BsDate.isEstimatedYear(state.date.year))
-            Text(
-              '${l10n.estimated} · ${l10n.estimatedExplain(fmt.number(state.date.year))}',
-              style: TextStyle(color: patro.onHeader.withValues(alpha: 0.7), fontSize: 12),
+            Text(fmt.weekday(state.date.weekday), style: TextStyle(color: ink.withValues(alpha: 0.7), fontSize: 13)),
+            const SizedBox(height: 14),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                chip(fmt.tithi(const BsCalculator().tithiOn(ad)), filled: true, icon: Icons.brightness_3_outlined),
+                chip(relative, icon: Icons.schedule),
+                if (BsDate.isEstimatedYear(state.date.year)) chip(l10n.estimated, icon: Icons.info_outline),
+              ],
             ),
-          const SizedBox(height: 4),
-          Text(
-            relative,
-            style: TextStyle(color: patro.accent, fontWeight: FontWeight.w700),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton.icon(
-                style: TextButton.styleFrom(foregroundColor: patro.onHeader),
-                onPressed: () => SharePlus.instance.share(
-                  ShareParams(text: '${fmt.bsDateWithWeekday(state.date)} = ${fmt.adDateLong(ad)}'),
-                ),
-                icon: const Icon(Icons.share_outlined, size: 20),
-                label: Text(l10n.share),
-              ),
-              TextButton.icon(
-                style: TextButton.styleFrom(foregroundColor: patro.onHeader),
-                onPressed: () => openNoteEditor(context, state.date),
-                icon: const Icon(Icons.notifications_none, size: 20),
-                label: Text(l10n.addReminderOnDate),
+            if (BsDate.isEstimatedYear(state.date.year)) ...[
+              const SizedBox(height: 8),
+              Text(
+                l10n.estimatedExplain(fmt.number(state.date.year)),
+                style: TextStyle(color: ink.withValues(alpha: 0.6), fontSize: 12),
               ),
             ],
-          ),
-        ],
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => SharePlus.instance.share(
+                      ShareParams(text: '${fmt.bsDateWithWeekday(state.date)} = ${fmt.adDateLong(ad)}'),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: ink,
+                      backgroundColor: Colors.white.withValues(alpha: 0.1),
+                      side: BorderSide(color: Colors.white.withValues(alpha: 0.18)),
+                      shape: const StadiumBorder(),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                    ),
+                    icon: const Icon(Icons.ios_share, size: 18),
+                    label: Text(l10n.share),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: FilledButton.icon(
+                    onPressed: () => openNoteEditor(context, state.date),
+                    style: FilledButton.styleFrom(backgroundColor: ink, foregroundColor: const Color(0xFF0C1008)),
+                    icon: const Icon(Icons.notification_add_outlined, size: 18),
+                    label: Text(l10n.remindShort, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
+/// Two BS dates and the gap between them, in days and in years/months/days.
 class _DaysBetweenCard extends StatelessWidget {
   const _DaysBetweenCard({required this.state});
 
@@ -177,65 +282,103 @@ class _DaysBetweenCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final fmt = context.fmt;
-    final theme = Theme.of(context);
+    final p = context.patro;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
     final cubit = context.read<ConverterCubit>();
     final breakdown = state.rangeBreakdown;
 
-    Widget dateTile(String label, BsDate date, ValueChanged<BsDate> onPicked) => ListTile(
-      title: Text(label, style: TextStyle(color: context.patro.muted)),
-      subtitle: Text(fmt.bsDate(date), style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-      trailing: Text(fmt.adDate(date.toAd()), style: TextStyle(color: context.patro.muted)),
+    Widget dateRow(String label, BsDate date, ValueChanged<BsDate> onPicked) => InkWell(
+      borderRadius: BorderRadius.circular(18),
       onTap: () async {
         final picked = await showBsDatePicker(context, initial: date);
         if (picked != null) onPicked(picked);
       },
-    );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 8),
-          child: Text(l10n.daysBetweenTitle, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-        ),
-        Card(
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            children: [
-              dateTile(l10n.fromDate, state.rangeStart, cubit.setRangeStart),
-              Row(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 52,
+              decoration: BoxDecoration(
+                color: p.highlight.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Expanded(child: Divider(indent: 16)),
-                  IconButton(tooltip: l10n.swap, onPressed: cubit.swapRange, icon: const Icon(Icons.swap_vert)),
-                  const Expanded(child: Divider(endIndent: 16)),
+                  Text(fmt.number(date.day), style: serif(22, onSurface, height: 1)),
+                  Text(
+                    fmt.monthName(date.month),
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    style: TextStyle(fontSize: 10, color: p.muted),
+                  ),
                 ],
               ),
-              dateTile(l10n.toDate, state.rangeEnd, cubit.setRangeEnd),
-              const Divider(height: 1),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        fmt.digits(l10n.totalDays(state.daysBetween.abs())),
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      fmt.digits(l10n.yearsMonthsDays(breakdown.years, breakdown.months, breakdown.days)),
-                      style: TextStyle(color: context.patro.muted),
-                    ),
-                  ],
-                ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(label, style: TextStyle(color: p.muted, fontSize: 12)),
+                  Text(fmt.bsDate(date), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                ],
               ),
+            ),
+            Text(fmt.adDate(date.toAd()), style: TextStyle(color: p.muted, fontSize: 12.5)),
+          ],
+        ),
+      ),
+    );
+
+    Widget stat(int value, String label) => Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(color: p.highlight.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(16)),
+        child: Column(
+          children: [
+            Text(fmt.number(value), style: serif(26, onSurface, height: 1)),
+            const SizedBox(height: 2),
+            Text(label, style: TextStyle(color: p.muted, fontSize: 12)),
+          ],
+        ),
+      ),
+    );
+
+    return GlassCard(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          dateRow(l10n.fromDate, state.rangeStart, cubit.setRangeStart),
+          Row(
+            children: [
+              Expanded(child: Divider(color: p.cardBorder)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: RoundIconButton(icon: Icons.swap_vert, tooltip: l10n.swap, onPressed: cubit.swapRange, size: 40),
+              ),
+              Expanded(child: Divider(color: p.cardBorder)),
             ],
           ),
-        ),
-      ],
+          dateRow(l10n.toDate, state.rangeEnd, cubit.setRangeEnd),
+          const SizedBox(height: 14),
+          Text(fmt.digits(l10n.totalDays(state.daysBetween.abs())), style: serif(40, onSurface, height: 1)),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              stat(breakdown.years, l10n.statYears),
+              const SizedBox(width: 8),
+              stat(breakdown.months, l10n.statMonths),
+              const SizedBox(width: 8),
+              stat(breakdown.days, l10n.statDays),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

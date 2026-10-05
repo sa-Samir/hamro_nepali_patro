@@ -161,10 +161,7 @@ class _MonthHeading extends StatelessWidget {
                 spacing: 8,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  Text(
-                    fmt.adSpan(month),
-                    style: TextStyle(color: p.muted, fontSize: 13),
-                  ),
+                  Text(fmt.adSpan(month), style: TextStyle(color: p.muted, fontSize: 13)),
                   if (BsDate.isEstimatedYear(month.year)) _EstimatedChip(year: month.year),
                 ],
               ),

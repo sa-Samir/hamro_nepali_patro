@@ -160,3 +160,100 @@ class GhostPillButton extends StatelessWidget {
         : OutlinedButton.icon(onPressed: onPressed, style: style, icon: Icon(icon, size: 18), label: Text(label));
   }
 }
+
+/// Two or three options in a glass pill; the chosen one is filled.
+class PillToggle<T> extends StatelessWidget {
+  const PillToggle({super.key, required this.options, required this.selected, required this.onChanged});
+
+  final List<(T, String)> options;
+  final T selected;
+  final ValueChanged<T> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.patro;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: p.card,
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: p.cardBorder),
+      ),
+      child: Row(
+        children: [
+          for (final (value, label) in options)
+            Expanded(
+              child: Semantics(
+                button: true,
+                selected: value == selected,
+                child: GestureDetector(
+                  onTap: () => onChanged(value),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    height: 42,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: value == selected ? p.highlight : Colors.transparent,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: value == selected ? p.onHighlight : onSurface.withValues(alpha: 0.8),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Icon in a softly tinted circle, used as a list row's leading element.
+class IconBubble extends StatelessWidget {
+  const IconBubble(this.icon, {super.key, this.size = 40});
+
+  final IconData icon;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: size,
+    height: size,
+    decoration: BoxDecoration(color: context.patro.highlight.withValues(alpha: 0.16), shape: BoxShape.circle),
+    child: Icon(icon, size: size * 0.5, color: Theme.of(context).colorScheme.onSurface),
+  );
+}
+
+/// Large serif page title with a small muted line above it.
+class PageTitle extends StatelessWidget {
+  const PageTitle({super.key, required this.title, this.eyebrow, this.trailing});
+
+  final String title;
+  final String? eyebrow;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (eyebrow != null) Text(eyebrow!, style: TextStyle(color: context.patro.muted, fontSize: 13)),
+            Text(title, style: serif(40, Theme.of(context).colorScheme.onSurface)),
+          ],
+        ),
+      ),
+      ?trailing,
+    ],
+  );
+}

@@ -559,4 +559,28 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get nothingUpcoming => 'आउँदा केही हप्तामा केही छैन';
+
+  @override
+  String get statYears => 'वर्ष';
+
+  @override
+  String get statMonths => 'महिना';
+
+  @override
+  String get statDays => 'दिन';
+
+  @override
+  String get switchDirection => 'दिशा बदल्नुहोस्';
+
+  @override
+  String get changeDate => 'मिति बदल्नुहोस्';
+
+  @override
+  String get statHolidayData => 'बिदा विवरण';
+
+  @override
+  String get statVerifiedThrough => 'प्रमाणित';
+
+  @override
+  String get remindShort => 'सम्झाउनुस्';
 }

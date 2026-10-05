@@ -283,5 +283,13 @@
   "remindMe": "Add reminder",
   "history": "History",
   "edit": "Edit",
-  "nothingUpcoming": "Nothing in the next few weeks"
+  "nothingUpcoming": "Nothing in the next few weeks",
+  "statYears": "Years",
+  "statMonths": "Months",
+  "statDays": "Days",
+  "switchDirection": "Switch direction",
+  "changeDate": "Change date",
+  "statHolidayData": "Holiday data",
+  "statVerifiedThrough": "Verified to",
+  "remindShort": "Remind me"
 }
