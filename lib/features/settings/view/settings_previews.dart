@@ -249,7 +249,7 @@ class NotificationPreview extends StatelessWidget {
     final event = settings.todayNotificationShowEvents ? t.nextLine : null;
     final sub = [t.tithi, ?ad].join(' · ');
     TextStyle muted([double size = 13]) => TextStyle(color: p.muted, fontSize: size);
-    const maroon = Color(0xFF7A1F1F);
+    const forest = Color(0xFF2E4A24); // matches notification_page_ink
 
     final Widget body = switch (settings.todayNotificationStyle) {
       TodayNotificationStyle.number => Row(
@@ -279,7 +279,7 @@ class NotificationPreview extends StatelessWidget {
                 Container(
                   height: 15,
                   width: double.infinity,
-                  color: maroon,
+                  color: forest,
                   alignment: Alignment.center,
                   child: Text(
                     t.fmt.monthName(t.date.month),
@@ -290,7 +290,7 @@ class NotificationPreview extends StatelessWidget {
                   child: Center(
                     child: Text(
                       t.day,
-                      style: const TextStyle(color: maroon, fontSize: 20, fontWeight: FontWeight.w700),
+                      style: const TextStyle(color: forest, fontSize: 20, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
