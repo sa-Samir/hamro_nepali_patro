@@ -158,6 +158,10 @@ class AppTheme {
       onPrimaryContainer: Color(0xFF141A11),
       secondaryContainer: Color(0xFFE3EBD8),
       onSecondaryContainer: Color(0xFF141A11),
+      // Material's default tertiary is cyan (time picker AM/PM etc.).
+      tertiary: Color(0xFF8A6D1F),
+      tertiaryContainer: Color(0xFFD5E3C3),
+      onTertiaryContainer: Color(0xFF141A11),
       surface: Color(0xFFF7F4EE),
       onSurface: Color(0xFF141A11),
       surfaceContainerLow: Color(0xCCFFFFFF),
@@ -177,6 +181,9 @@ class AppTheme {
       onPrimaryContainer: Color(0xFFF9F5F0),
       secondaryContainer: Color(0xFF2E3A26),
       onSecondaryContainer: Color(0xFFF9F5F0),
+      tertiary: Color(0xFFD9C98A),
+      tertiaryContainer: Color(0xFFBAD45F),
+      onTertiaryContainer: Color(0xFF0C1008),
       surface: Color(0xFF0C1008),
       onSurface: Color(0xFFF9F5F0),
       surfaceContainerLow: Color(0x14FFFFFF),
@@ -190,6 +197,8 @@ class AppTheme {
 
   static ThemeData _build(ColorScheme scheme, PatroColors patro) {
     final base = ThemeData(colorScheme: scheme, useMaterial3: true);
+    // White hairlines vanish on the light background; use a visible one there.
+    final hairline = scheme.brightness == Brightness.light ? scheme.outlineVariant : patro.cardBorder;
     return base.copyWith(
       // Pages inside the shell paint their own gradient; pushed routes use this.
       scaffoldBackgroundColor: patro.backgroundBottom,
@@ -216,11 +225,11 @@ class AppTheme {
         fillColor: patro.card,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: patro.cardBorder),
+          borderSide: BorderSide(color: hairline),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: patro.cardBorder),
+          borderSide: BorderSide(color: hairline),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
@@ -235,10 +244,15 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: patro.card,
         selectedColor: patro.highlight,
-        side: BorderSide(color: patro.cardBorder),
+        side: BorderSide(color: hairline),
         shape: const StadiumBorder(),
-        labelStyle: TextStyle(color: scheme.onSurface),
-        secondaryLabelStyle: TextStyle(color: patro.onHighlight),
+        // Chips resolve the label *colour* per state (not the whole style).
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: WidgetStateColor.resolveWith(
+            (states) => states.contains(WidgetState.selected) ? patro.onHighlight : scheme.onSurface,
+          ),
+        ),
         checkmarkColor: patro.onHighlight,
       ),
       segmentedButtonTheme: SegmentedButtonThemeData(
