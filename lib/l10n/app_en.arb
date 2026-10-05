@@ -291,5 +291,21 @@
   "changeDate": "Change date",
   "statHolidayData": "Holiday data",
   "statVerifiedThrough": "Verified to",
-  "remindShort": "Remind me"
+  "remindShort": "Remind me",
+  "tileLook": "Look",
+  "tileNotification": "Notification",
+  "stateOn": "On",
+  "stateOff": "Off",
+  "previewLabel": "Preview",
+  "sampleReminder": "Aama's birthday",
+  "reminderCountLabel": "{count, plural, =0{No reminders} =1{1 reminder} other{{count} reminders}}",
+  "@reminderCountLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addToHomeScreen": "Add to home screen",
+  "settingsSubtitle": "Tap a tile to change it"
 }

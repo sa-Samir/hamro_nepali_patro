@@ -1123,6 +1123,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remind me'**
   String get remindShort;
+
+  /// No description provided for @tileLook.
+  ///
+  /// In en, this message translates to:
+  /// **'Look'**
+  String get tileLook;
+
+  /// No description provided for @tileNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get tileNotification;
+
+  /// No description provided for @stateOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get stateOn;
+
+  /// No description provided for @stateOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get stateOff;
+
+  /// No description provided for @previewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get previewLabel;
+
+  /// No description provided for @sampleReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Aama\'s birthday'**
+  String get sampleReminder;
+
+  /// No description provided for @reminderCountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No reminders} =1{1 reminder} other{{count} reminders}}'**
+  String reminderCountLabel(int count);
+
+  /// No description provided for @addToHomeScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to home screen'**
+  String get addToHomeScreen;
+
+  /// No description provided for @settingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a tile to change it'**
+  String get settingsSubtitle;
 }
 
 class _AppLocalizationsDelegate

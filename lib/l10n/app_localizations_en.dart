@@ -612,4 +612,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remindShort => 'Remind me';
+
+  @override
+  String get tileLook => 'Look';
+
+  @override
+  String get tileNotification => 'Notification';
+
+  @override
+  String get stateOn => 'On';
+
+  @override
+  String get stateOff => 'Off';
+
+  @override
+  String get previewLabel => 'Preview';
+
+  @override
+  String get sampleReminder => 'Aama\'s birthday';
+
+  @override
+  String reminderCountLabel(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reminders',
+      one: '1 reminder',
+      zero: 'No reminders',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get addToHomeScreen => 'Add to home screen';
+
+  @override
+  String get settingsSubtitle => 'Tap a tile to change it';
 }

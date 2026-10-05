@@ -583,4 +583,33 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get remindShort => 'सम्झाउनुस्';
+
+  @override
+  String get tileLook => 'रूप';
+
+  @override
+  String get tileNotification => 'सूचना';
+
+  @override
+  String get stateOn => 'सक्रिय';
+
+  @override
+  String get stateOff => 'बन्द';
+
+  @override
+  String get previewLabel => 'पूर्वावलोकन';
+
+  @override
+  String get sampleReminder => 'आमाको जन्मदिन';
+
+  @override
+  String reminderCountLabel(int count) {
+    return '$count वटा सम्झना';
+  }
+
+  @override
+  String get addToHomeScreen => 'होम स्क्रिनमा थप्नुहोस्';
+
+  @override
+  String get settingsSubtitle => 'परिवर्तन गर्न टाइल थिच्नुहोस्';
 }

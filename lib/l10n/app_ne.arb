@@ -170,5 +170,14 @@
   "changeDate": "मिति बदल्नुहोस्",
   "statHolidayData": "बिदा विवरण",
   "statVerifiedThrough": "प्रमाणित",
-  "remindShort": "सम्झाउनुस्"
+  "remindShort": "सम्झाउनुस्",
+  "tileLook": "रूप",
+  "tileNotification": "सूचना",
+  "stateOn": "सक्रिय",
+  "stateOff": "बन्द",
+  "previewLabel": "पूर्वावलोकन",
+  "sampleReminder": "आमाको जन्मदिन",
+  "reminderCountLabel": "{count} वटा सम्झना",
+  "addToHomeScreen": "होम स्क्रिनमा थप्नुहोस्",
+  "settingsSubtitle": "परिवर्तन गर्न टाइल थिच्नुहोस्"
 }
