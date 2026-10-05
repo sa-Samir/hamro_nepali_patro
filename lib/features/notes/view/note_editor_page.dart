@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/bs/bs_date.dart';
 import '../../../core/context_ext.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/glass.dart';
 import '../../../services/reminder_scheduler.dart';
 import '../../calendar/widgets/bs_pickers.dart';
 import '../../settings/cubit/settings_cubit.dart';
@@ -79,128 +80,137 @@ class _NoteEditorView extends StatelessWidget {
     final state = context.watch<NoteEditorCubit>().state;
     final note = state.draft;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(state.isNew ? l10n.newNote : l10n.editNote),
-        actions: [
-          if (!state.isNew)
-            IconButton(tooltip: l10n.delete, onPressed: () => _delete(context), icon: const Icon(Icons.delete_outline)),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-        children: [
-          TextFormField(
-            initialValue: note.title,
-            autofocus: state.isNew,
-            textCapitalization: TextCapitalization.sentences,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              labelText: l10n.titleLabel,
-              hintText: l10n.titleHint,
-              errorText: state.showErrors && state.titleMissing ? l10n.titleRequired : null,
+    // Same gradient background as the tab pages, so the top of the screen
+    // doesn't change colour when the editor opens.
+    return PatroBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text(state.isNew ? l10n.newNote : l10n.editNote),
+          actions: [
+            if (!state.isNew)
+              IconButton(
+                tooltip: l10n.delete,
+                onPressed: () => _delete(context),
+                icon: const Icon(Icons.delete_outline),
+              ),
+          ],
+        ),
+        body: ListView(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          children: [
+            TextFormField(
+              initialValue: note.title,
+              autofocus: state.isNew,
+              textCapitalization: TextCapitalization.sentences,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                labelText: l10n.titleLabel,
+                hintText: l10n.titleHint,
+                errorText: state.showErrors && state.titleMissing ? l10n.titleRequired : null,
+              ),
+              onChanged: cubit.setTitle,
             ),
-            onChanged: cubit.setTitle,
-          ),
-          const SizedBox(height: 16),
-          _SectionCard(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.event_outlined),
-                title: Text(fmt.bsDateWithWeekday(note.date)),
-                subtitle: Text(fmt.adDateLong(note.date.toAd())),
-                trailing: const Icon(Icons.edit_calendar_outlined),
-                onTap: () async {
-                  final picked = await showBsDatePicker(context, initial: note.date);
-                  if (picked != null) cubit.setDate(picked);
-                },
-              ),
-              const Divider(height: 1, indent: 56),
-              ListTile(
-                leading: const Icon(Icons.repeat),
-                title: Text(l10n.repeatLabel),
-                subtitle: Text(_repeatLabel(context, note.repeat)),
-                onTap: () async {
-                  final picked = await showModalBottomSheet<RepeatRule>(
-                    context: context,
-                    showDragHandle: true,
-                    builder: (sheetContext) => SafeArea(
-                      child: RadioGroup<RepeatRule>(
-                        groupValue: note.repeat,
-                        onChanged: (v) => Navigator.pop(sheetContext, v),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            for (final rule in RepeatRule.values)
-                              RadioListTile<RepeatRule>(value: rule, title: Text(_repeatLabel(context, rule))),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                  if (picked != null) cubit.setRepeat(picked);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _SectionCard(
-            children: [
-              SwitchListTile(
-                secondary: const Icon(Icons.notifications_active_outlined),
-                title: Text(l10n.notifyMe),
-                value: note.remind,
-                onChanged: cubit.setRemind,
-              ),
-              if (note.remind) ...[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                  child: Wrap(
-                    spacing: 8,
-                    runSpacing: 4,
-                    children: [
-                      for (final days in reminderOffsetChoices)
-                        FilterChip(
-                          label: Text(fmt.digits(_offsetLabel(context, days))),
-                          selected: note.reminderOffsets.contains(days),
-                          onSelected: (_) => cubit.toggleOffset(days),
-                        ),
-                    ],
-                  ),
+            const SizedBox(height: 16),
+            _SectionCard(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.event_outlined),
+                  title: Text(fmt.bsDateWithWeekday(note.date)),
+                  subtitle: Text(fmt.adDateLong(note.date.toAd())),
+                  trailing: const Icon(Icons.edit_calendar_outlined),
+                  onTap: () async {
+                    final picked = await showBsDatePicker(context, initial: note.date);
+                    if (picked != null) cubit.setDate(picked);
+                  },
                 ),
                 const Divider(height: 1, indent: 56),
                 ListTile(
-                  leading: const Icon(Icons.schedule),
-                  title: Text(l10n.reminderTime),
-                  trailing: Text(fmt.time(note.reminderMinutes), style: theme.textTheme.titleMedium),
+                  leading: const Icon(Icons.repeat),
+                  title: Text(l10n.repeatLabel),
+                  subtitle: Text(_repeatLabel(context, note.repeat)),
                   onTap: () async {
-                    final picked = await showTimePicker(
+                    final picked = await showModalBottomSheet<RepeatRule>(
                       context: context,
-                      initialTime: TimeOfDay(hour: note.reminderMinutes ~/ 60, minute: note.reminderMinutes % 60),
+                      showDragHandle: true,
+                      builder: (sheetContext) => SafeArea(
+                        child: RadioGroup<RepeatRule>(
+                          groupValue: note.repeat,
+                          onChanged: (v) => Navigator.pop(sheetContext, v),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              for (final rule in RepeatRule.values)
+                                RadioListTile<RepeatRule>(value: rule, title: Text(_repeatLabel(context, rule))),
+                            ],
+                          ),
+                        ),
+                      ),
                     );
-                    if (picked != null) cubit.setReminderMinutes(picked.hour * 60 + picked.minute);
+                    if (picked != null) cubit.setRepeat(picked);
                   },
                 ),
               ],
-            ],
-          ),
-          const SizedBox(height: 16),
-          TextFormField(
-            initialValue: note.description,
-            minLines: 3,
-            maxLines: 6,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(labelText: l10n.descriptionLabel, alignLabelWithHint: true),
-            onChanged: cubit.setDescription,
-          ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          child: FilledButton(
-            onPressed: state.status == EditorStatus.saving ? null : () => _save(context),
-            child: Text(l10n.save),
+            ),
+            const SizedBox(height: 16),
+            _SectionCard(
+              children: [
+                SwitchListTile(
+                  secondary: const Icon(Icons.notifications_active_outlined),
+                  title: Text(l10n.notifyMe),
+                  value: note.remind,
+                  onChanged: cubit.setRemind,
+                ),
+                if (note.remind) ...[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      children: [
+                        for (final days in reminderOffsetChoices)
+                          FilterChip(
+                            label: Text(fmt.digits(_offsetLabel(context, days))),
+                            selected: note.reminderOffsets.contains(days),
+                            onSelected: (_) => cubit.toggleOffset(days),
+                          ),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 1, indent: 56),
+                  ListTile(
+                    leading: const Icon(Icons.schedule),
+                    title: Text(l10n.reminderTime),
+                    trailing: Text(fmt.time(note.reminderMinutes), style: theme.textTheme.titleMedium),
+                    onTap: () async {
+                      final picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay(hour: note.reminderMinutes ~/ 60, minute: note.reminderMinutes % 60),
+                      );
+                      if (picked != null) cubit.setReminderMinutes(picked.hour * 60 + picked.minute);
+                    },
+                  ),
+                ],
+              ],
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              initialValue: note.description,
+              minLines: 3,
+              maxLines: 6,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: InputDecoration(labelText: l10n.descriptionLabel, alignLabelWithHint: true),
+              onChanged: cubit.setDescription,
+            ),
+          ],
+        ),
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+            child: FilledButton(
+              onPressed: state.status == EditorStatus.saving ? null : () => _save(context),
+              child: Text(l10n.save),
+            ),
           ),
         ),
       ),

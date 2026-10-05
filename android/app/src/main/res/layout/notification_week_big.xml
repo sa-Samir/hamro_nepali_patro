@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Week style, expanded: date lines, then Sunday–Saturday with today marked. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/notification_card_forest"
+    android:background="@drawable/notification_card_panel"
     android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

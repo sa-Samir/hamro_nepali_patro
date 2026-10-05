@@ -176,7 +176,7 @@ class _NotificationShell extends StatelessWidget {
   final Widget? icon;
 
   /// Draw [child] on the light-green panel the real notification uses
-  /// (android res/drawable/notification_card_forest.xml). Android draws the
+  /// (android res/drawable/notification_card_panel.xml). Android draws the
   /// card around it itself, so only the panel can be coloured.
   final bool panel;
 
@@ -213,7 +213,7 @@ class _NotificationShell extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: const Color(0xFFDCE8CD), borderRadius: BorderRadius.circular(16)),
+              decoration: BoxDecoration(color: const Color(0xFFF6E6E1), borderRadius: BorderRadius.circular(16)),
               child: DefaultTextStyle.merge(
                 style: const TextStyle(color: Color(0xFF141A11)),
                 child: child,
@@ -249,7 +249,7 @@ class NotificationPreview extends StatelessWidget {
     final event = settings.todayNotificationShowEvents ? t.nextLine : null;
     final sub = [t.tithi, ?ad].join(' · ');
     TextStyle muted([double size = 13]) => TextStyle(color: p.muted, fontSize: size);
-    const forest = Color(0xFF2E4A24); // matches notification_page_ink
+    const maroon = Color(0xFF7A1F1F); // matches notification_page_ink
 
     final Widget body = switch (settings.todayNotificationStyle) {
       TodayNotificationStyle.number => Row(
@@ -279,7 +279,7 @@ class NotificationPreview extends StatelessWidget {
                 Container(
                   height: 15,
                   width: double.infinity,
-                  color: forest,
+                  color: maroon,
                   alignment: Alignment.center,
                   child: Text(
                     t.fmt.monthName(t.date.month),
@@ -290,7 +290,7 @@ class NotificationPreview extends StatelessWidget {
                   child: Center(
                     child: Text(
                       t.day,
-                      style: const TextStyle(color: forest, fontSize: 20, fontWeight: FontWeight.w700),
+                      style: const TextStyle(color: maroon, fontSize: 20, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
@@ -421,19 +421,12 @@ class NotificationPreview extends StatelessWidget {
 /// Colours of the home-screen widget themes (kept in step with
 /// android/.../widget/WidgetTheme.kt and ios/PatroWidget/Theme.swift).
 ({Color bg, Color text, Color muted, Color number, Color gold}) _widgetPalette(WidgetTheme theme) => switch (theme) {
-  WidgetTheme.forest => (
-    bg: const Color(0xFF141C11),
-    text: const Color(0xFFF9F5F0),
-    muted: const Color(0xFFA9ABA6),
-    number: const Color(0xFFBAD45F),
-    gold: const Color(0xFFD9C98A),
-  ),
   WidgetTheme.cream => (
-    bg: const Color(0xFFF7F4EE),
-    text: const Color(0xFF141A11),
-    muted: const Color(0xFF5E665C),
-    number: const Color(0xFF2E4A24),
-    gold: const Color(0xFF8A6D1F),
+    bg: const Color(0xFFFBF5EC),
+    text: const Color(0xFF2B1A14),
+    muted: const Color(0xFF7A6558),
+    number: const Color(0xFF7A1F1F),
+    gold: const Color(0xFFA8711A),
   ),
   WidgetTheme.photo => (
     bg: const Color(0xFF3A1712),

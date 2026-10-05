@@ -145,7 +145,7 @@ class _InputCard extends StatelessWidget {
   }
 }
 
-/// The converted date on a deep forest card, with tithi and quick actions.
+/// The converted date on a deep maroon card, with tithi and quick actions.
 class _ResultCard extends StatelessWidget {
   const _ResultCard({required this.state});
 

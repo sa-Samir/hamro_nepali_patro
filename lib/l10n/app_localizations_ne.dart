@@ -502,7 +502,7 @@ class AppLocalizationsNe extends AppLocalizations {
       'एपकै ऋतु तस्बिर, हरेक दुई महिनामा फेरिन्छ';
 
   @override
-  String get widgetThemeMaroon => 'गाढा मरुन';
+  String get widgetThemeMaroon => 'मरुन';
 
   @override
   String get widgetThemeMaroonHint => 'सयपत्री रङसहित गाढा मरुन';
@@ -514,10 +514,11 @@ class AppLocalizationsNe extends AppLocalizations {
   String get widgetThemeMarigoldHint => 'मरुनसहित न्यानो सयपत्री रङ';
 
   @override
-  String get widgetThemeCream => 'हल्का हरियो';
+  String get widgetThemeCream => 'क्रिम';
 
   @override
-  String get widgetThemeCreamHint => 'हल्का, डार्क मोड अनुसार फेरिन्छ';
+  String get widgetThemeCreamHint =>
+      'मरुनसहित हल्का क्रिम, डार्क मोड अनुसार फेरिन्छ';
 
   @override
   String get previewSeason => 'ऋतु पूर्वावलोकन';
@@ -612,31 +613,4 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get settingsSubtitle => 'परिवर्तन गर्न टाइल थिच्नुहोस्';
-
-  @override
-  String get widgetThemeForest => 'वन';
-
-  @override
-  String get widgetThemeForestHint => 'एपजस्तै गाढा हरियो र कागती रङ';
-
-  @override
-  String get palette => 'रङ';
-
-  @override
-  String get paletteForest => 'वन';
-
-  @override
-  String get paletteHimalaya => 'हिमाली रात';
-
-  @override
-  String get paletteTerracotta => 'माटो';
-
-  @override
-  String get paletteRhododendron => 'गुराँस';
-
-  @override
-  String get paletteLake => 'ताल';
-
-  @override
-  String get paletteMaroon => 'मरुन';
 }

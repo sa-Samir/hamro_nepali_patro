@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'palettes.dart';
 
-export 'palettes.dart' show AppPalette;
-
-/// Design tokens beyond Material's ColorScheme, derived from the user's
-/// palette ([AppPalette]) in light or dark. Every palette shares the same
+/// Design tokens beyond Material's ColorScheme, derived from
+/// [maroonPalette] in light or dark. Every palette shares the same
 /// components: glass cards, day tiles, pill buttons, floating nav.
 @immutable
 class PatroColors extends ThemeExtension<PatroColors> {
@@ -147,9 +146,9 @@ TextStyle serif(double size, Color color, {FontWeight weight = FontWeight.w400, 
 );
 
 class AppTheme {
-  static ThemeData light([AppPalette palette = AppPalette.forest]) => _from(palettes[palette]!.light, dark: false);
+  static ThemeData light() => _from(maroonPalette.light, dark: false);
 
-  static ThemeData dark([AppPalette palette = AppPalette.forest]) => _from(palettes[palette]!.dark, dark: true);
+  static ThemeData dark() => _from(maroonPalette.dark, dark: true);
 
   static ThemeData _from(PaletteSpec c, {required bool dark}) {
     Color over(Color tint, double a, Color base) => Color.alphaBlend(tint.withValues(alpha: a), base);
@@ -191,6 +190,12 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         titleTextStyle: serif(28, scheme.onSurface),
+        // Transparent status bar with icons matching the page, the same as the
+        // tab pages, so opening the editor doesn't flash a different bar.
+        systemOverlayStyle:
+            (scheme.brightness == Brightness.dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark).copyWith(
+              statusBarColor: Colors.transparent,
+            ),
       ),
       cardTheme: CardThemeData(
         color: patro.card,

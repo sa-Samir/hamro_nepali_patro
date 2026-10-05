@@ -965,7 +965,7 @@ abstract class AppLocalizations {
   /// No description provided for @widgetThemeMaroon.
   ///
   /// In en, this message translates to:
-  /// **'Rich maroon'**
+  /// **'Maroon'**
   String get widgetThemeMaroon;
 
   /// No description provided for @widgetThemeMaroonHint.
@@ -989,13 +989,13 @@ abstract class AppLocalizations {
   /// No description provided for @widgetThemeCream.
   ///
   /// In en, this message translates to:
-  /// **'Sage'**
+  /// **'Cream'**
   String get widgetThemeCream;
 
   /// No description provided for @widgetThemeCreamHint.
   ///
   /// In en, this message translates to:
-  /// **'Light, follows dark mode'**
+  /// **'Light cream with maroon, follows dark mode'**
   String get widgetThemeCreamHint;
 
   /// No description provided for @previewSeason.
@@ -1177,60 +1177,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a tile to change it'**
   String get settingsSubtitle;
-
-  /// No description provided for @widgetThemeForest.
-  ///
-  /// In en, this message translates to:
-  /// **'Forest'**
-  String get widgetThemeForest;
-
-  /// No description provided for @widgetThemeForestHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Deep green with lime, like the app'**
-  String get widgetThemeForestHint;
-
-  /// No description provided for @palette.
-  ///
-  /// In en, this message translates to:
-  /// **'Palette'**
-  String get palette;
-
-  /// No description provided for @paletteForest.
-  ///
-  /// In en, this message translates to:
-  /// **'Forest'**
-  String get paletteForest;
-
-  /// No description provided for @paletteHimalaya.
-  ///
-  /// In en, this message translates to:
-  /// **'Himalayan night'**
-  String get paletteHimalaya;
-
-  /// No description provided for @paletteTerracotta.
-  ///
-  /// In en, this message translates to:
-  /// **'Terracotta'**
-  String get paletteTerracotta;
-
-  /// No description provided for @paletteRhododendron.
-  ///
-  /// In en, this message translates to:
-  /// **'Rhododendron'**
-  String get paletteRhododendron;
-
-  /// No description provided for @paletteLake.
-  ///
-  /// In en, this message translates to:
-  /// **'Lake'**
-  String get paletteLake;
-
-  /// No description provided for @paletteMaroon.
-  ///
-  /// In en, this message translates to:
-  /// **'Maroon'**
-  String get paletteMaroon;
 }
 
 class _AppLocalizationsDelegate

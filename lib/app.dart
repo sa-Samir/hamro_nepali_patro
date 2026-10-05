@@ -58,12 +58,12 @@ class PatroApp extends StatelessWidget {
           BlocProvider(create: (_) => ConverterCubit()),
         ],
         child: BlocBuilder<SettingsCubit, AppSettings>(
-          buildWhen: (a, b) => a.language != b.language || a.themeMode != b.themeMode || a.palette != b.palette,
+          buildWhen: (a, b) => a.language != b.language || a.themeMode != b.themeMode,
           builder: (context, settings) => MaterialApp(
             onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.light(settings.palette),
-            darkTheme: AppTheme.dark(settings.palette),
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
             themeMode: settings.themeMode,
             locale: settings.language.locale,
             supportedLocales: AppLocalizations.supportedLocales,

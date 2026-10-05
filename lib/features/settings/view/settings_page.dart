@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/bs/bs_date.dart';
 import '../../../core/context_ext.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/theme/palettes.dart';
 import '../../../core/widgets/glass.dart';
 import '../../../data/remote/calendar_data_cubit.dart';
 import '../../../data/repositories/holiday_repository.dart';
@@ -47,12 +46,7 @@ class SettingsPage extends StatelessWidget {
             '${s.numerals == NumeralStyle.devanagari ? '१२३' : '123'}',
         sheet: _languageSheet,
       ),
-      _TileSpec(
-        icon: Icons.contrast,
-        title: l10n.tileLook,
-        value: '${_paletteLabel(l10n, s.palette)} · ${_themeLabel(l10n, s.themeMode)}',
-        sheet: _lookSheet,
-      ),
+      _TileSpec(icon: Icons.contrast, title: l10n.tileLook, value: _themeLabel(l10n, s.themeMode), sheet: _lookSheet),
       _TileSpec(
         icon: Icons.alarm,
         title: l10n.sectionReminders,
@@ -311,79 +305,6 @@ String _themeLabel(AppLocalizations l10n, ThemeMode mode) => switch (mode) {
   ThemeMode.dark => l10n.themeDark,
 };
 
-String _paletteLabel(AppLocalizations l10n, AppPalette palette) => switch (palette) {
-  AppPalette.forest => l10n.paletteForest,
-  AppPalette.himalaya => l10n.paletteHimalaya,
-  AppPalette.terracotta => l10n.paletteTerracotta,
-  AppPalette.rhododendron => l10n.paletteRhododendron,
-  AppPalette.lake => l10n.paletteLake,
-  AppPalette.maroon => l10n.paletteMaroon,
-};
-
-/// A palette as a tappable swatch: its background, highlight and accent.
-class _PaletteSwatch extends StatelessWidget {
-  const _PaletteSwatch({required this.palette, required this.selected, required this.onTap});
-
-  final AppPalette palette;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.patro;
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final spec = dark ? palettes[palette]!.dark : palettes[palette]!.light;
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: _paletteLabel(context.l10n, palette),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Column(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: selected ? p.highlight : Colors.transparent, width: 2.5),
-              ),
-              child: ClipOval(
-                child: SizedBox(width: 52, height: 52, child: CustomPaint(painter: _SwatchPainter(spec))),
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              _paletteLabel(context.l10n, palette),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.w500),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Background on the left, highlight top-right, bright accent bottom-right.
-class _SwatchPainter extends CustomPainter {
-  const _SwatchPainter(this.spec);
-
-  final PaletteSpec spec;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final w = size.width, h = size.height;
-    canvas.drawRect(Offset.zero & size, Paint()..color = spec.backgroundTop);
-    canvas.drawRect(Rect.fromLTWH(w / 2, 0, w / 2, h / 2), Paint()..color = spec.highlight);
-    canvas.drawRect(Rect.fromLTWH(w / 2, h / 2, w / 2, h / 2), Paint()..color = spec.bright);
-  }
-
-  @override
-  bool shouldRepaint(_SwatchPainter old) => old.spec != spec;
-}
-
 List<Widget> _lookSheet(BuildContext context, AppSettings s) {
   final l10n = context.l10n;
   final cubit = context.read<SettingsCubit>();
@@ -391,22 +312,6 @@ List<Widget> _lookSheet(BuildContext context, AppSettings s) {
     PreviewFrame(
       label: l10n.previewLabel,
       child: LookPreview(settings: s),
-    ),
-    _Label(l10n.palette),
-    Wrap(
-      spacing: 8,
-      runSpacing: 14,
-      children: [
-        for (final palette in AppPalette.values)
-          SizedBox(
-            width: 96,
-            child: _PaletteSwatch(
-              palette: palette,
-              selected: s.palette == palette,
-              onTap: () => cubit.update((s) => s.copyWith(palette: palette)),
-            ),
-          ),
-      ],
     ),
     _Label(l10n.theme),
     PillToggle<ThemeMode>(
@@ -595,7 +500,6 @@ List<Widget> _aboutSheet(BuildContext context, AppSettings s) {
 };
 
 (String, String) _widgetThemeLabel(AppLocalizations l10n, WidgetTheme theme) => switch (theme) {
-  WidgetTheme.forest => (l10n.widgetThemeForest, l10n.widgetThemeForestHint),
   WidgetTheme.photo => (l10n.widgetThemePhoto, l10n.widgetThemePhotoHint),
   WidgetTheme.maroon => (l10n.widgetThemeMaroon, l10n.widgetThemeMaroonHint),
   WidgetTheme.marigold => (l10n.widgetThemeMarigold, l10n.widgetThemeMarigoldHint),

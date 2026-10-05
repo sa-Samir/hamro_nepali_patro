@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/theme/palettes.dart';
 import '../../features/calendar/models/season.dart';
 import '../../features/settings/models/app_settings.dart';
 
@@ -13,7 +12,6 @@ class SettingsRepository {
   static const _language = 'language';
   static const _numerals = 'numerals';
   static const _themeMode = 'themeMode';
-  static const _palette = 'palette';
   static const _showAd = 'showAdInCalendar';
   static const _reminderMinutes = 'reminderMinutes';
   static const _todayNotification = 'todayNotification';
@@ -34,7 +32,6 @@ class SettingsRepository {
       language: AppLanguage.values.asNameMap()[_prefs.getString(_language)] ?? d.language,
       numerals: NumeralStyle.values.asNameMap()[_prefs.getString(_numerals)] ?? d.numerals,
       themeMode: ThemeMode.values.asNameMap()[_prefs.getString(_themeMode)] ?? d.themeMode,
-      palette: AppPalette.values.asNameMap()[_prefs.getString(_palette)] ?? d.palette,
       showAdInCalendar: _prefs.getBool(_showAd) ?? d.showAdInCalendar,
       reminderMinutes: _prefs.getInt(_reminderMinutes) ?? d.reminderMinutes,
       todayNotification: _prefs.getBool(_todayNotification) ?? d.todayNotification,
@@ -53,7 +50,6 @@ class SettingsRepository {
       _prefs.setString(_language, s.language.name),
       _prefs.setString(_numerals, s.numerals.name),
       _prefs.setString(_themeMode, s.themeMode.name),
-      _prefs.setString(_palette, s.palette.name),
       _prefs.setBool(_showAd, s.showAdInCalendar),
       _prefs.setInt(_reminderMinutes, s.reminderMinutes),
       _prefs.setBool(_todayNotification, s.todayNotification),

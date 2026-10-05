@@ -9,33 +9,30 @@
     <color name="patro_on_surface">#2B1A14</color>
     <color name="patro_muted">#8A6A5A</color>
     <color name="patro_holiday">#B3261E</color>
-    <!-- Notification content sits on a fixed light-green panel (no night overrides). -->
-    <color name="notification_holiday">#C4472F</color>
-    <color name="notification_note">#2E4A24</color>
-    <color name="notification_event">#7C8579</color>
-    <color name="notification_tithi">#7A5F14</color>
-    <color name="notification_number">#2E4A24</color>
+    <!-- Notification content sits on a fixed light-rose panel (no night overrides). -->
+    <color name="notification_holiday">#B3261E</color>
+    <color name="notification_note">#7A1F1F</color>
+    <color name="notification_event">#8A7A72</color>
+    <color name="notification_tithi">#8A5A10</color>
+    <color name="notification_number">#7A1F1F</color>
     <color name="notification_divider">#1F000000</color>
-	<color name="ic_launcher_background">#2E4A24</color>
-    <color name="notification_saturday">#7A5F14</color>
+	<color name="ic_launcher_background">#7A1F1F</color>
+    <color name="notification_saturday">#8A5A10</color>
     <!-- Home-screen widgets (dark versions in values-night). -->
-    <color name="widget_card">#F7F4EE</color>
-    <color name="widget_text">#141A11</color>
-    <color name="widget_muted">#5E665C</color>
-    <color name="widget_number">#2E4A24</color>
-    <color name="widget_gold">#8A6D1F</color>
-    <color name="widget_holiday">#C4472F</color>
-    <color name="widget_hair">#DCE3D5</color>
-    <color name="notification_accent">#2E4A24</color>
-    <color name="notification_today_bg">#2E4A24</color>
-    <color name="notification_today_text">#F9F5F0</color>
-    <color name="widget_today_bg">#2E4A24</color>
-    <color name="widget_today_text">#F9F5F0</color>
-    <color name="forest_card">#141C11</color>
-    <color name="forest_lime">#BAD45F</color>
-    <color name="forest_ink">#0C1008</color>
+    <color name="widget_card">#FBF5EC</color>
+    <color name="widget_text">#2B1A14</color>
+    <color name="widget_muted">#7A6558</color>
+    <color name="widget_number">#7A1F1F</color>
+    <color name="widget_gold">#A8711A</color>
+    <color name="widget_holiday">#C62828</color>
+    <color name="widget_hair">#E8DCCB</color>
+    <color name="notification_accent">#7A1F1F</color>
+    <color name="notification_today_bg">#7A1F1F</color>
+    <color name="notification_today_text">#FFFFFF</color>
+    <color name="widget_today_bg">#7A1F1F</color>
+    <color name="widget_today_text">#FFFFFF</color>
     <color name="maroon">#7A1F1F</color>
-    <color name="notification_text">#141A11</color>
-    <color name="notification_text_muted">#4F5A4B</color>
-    <color name="notification_page_ink">#2E4A24</color>
+    <color name="notification_text">#2B1A14</color>
+    <color name="notification_text_muted">#6E5A52</color>
+    <color name="notification_page_ink">#7A1F1F</color>
 </resources>

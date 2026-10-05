@@ -258,12 +258,12 @@
   "widgetTheme": "Widget theme",
   "widgetThemePhoto": "Season photo",
   "widgetThemePhotoHint": "The app's season photo, changes every two months",
-  "widgetThemeMaroon": "Rich maroon",
+  "widgetThemeMaroon": "Maroon",
   "widgetThemeMaroonHint": "Deep maroon with marigold accents",
   "widgetThemeMarigold": "Marigold",
   "widgetThemeMarigoldHint": "Warm marigold with maroon",
-  "widgetThemeCream": "Sage",
-  "widgetThemeCreamHint": "Light, follows dark mode",
+  "widgetThemeCream": "Cream",
+  "widgetThemeCreamHint": "Light cream with maroon, follows dark mode",
   "previewSeason": "Preview season",
   "previewSeasonAuto": "Automatic",
   "previewSeasonAutoHint": "Follows the calendar",
@@ -307,14 +307,5 @@
     }
   },
   "addToHomeScreen": "Add to home screen",
-  "settingsSubtitle": "Tap a tile to change it",
-  "widgetThemeForest": "Forest",
-  "widgetThemeForestHint": "Deep green with lime, like the app",
-  "palette": "Palette",
-  "paletteForest": "Forest",
-  "paletteHimalaya": "Himalayan night",
-  "paletteTerracotta": "Terracotta",
-  "paletteRhododendron": "Rhododendron",
-  "paletteLake": "Lake",
-  "paletteMaroon": "Maroon"
+  "settingsSubtitle": "Tap a tile to change it"
 }

@@ -531,7 +531,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The app\'s season photo, changes every two months';
 
   @override
-  String get widgetThemeMaroon => 'Rich maroon';
+  String get widgetThemeMaroon => 'Maroon';
 
   @override
   String get widgetThemeMaroonHint => 'Deep maroon with marigold accents';
@@ -543,10 +543,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetThemeMarigoldHint => 'Warm marigold with maroon';
 
   @override
-  String get widgetThemeCream => 'Sage';
+  String get widgetThemeCream => 'Cream';
 
   @override
-  String get widgetThemeCreamHint => 'Light, follows dark mode';
+  String get widgetThemeCreamHint =>
+      'Light cream with maroon, follows dark mode';
 
   @override
   String get previewSeason => 'Preview season';
@@ -648,31 +649,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSubtitle => 'Tap a tile to change it';
-
-  @override
-  String get widgetThemeForest => 'Forest';
-
-  @override
-  String get widgetThemeForestHint => 'Deep green with lime, like the app';
-
-  @override
-  String get palette => 'Palette';
-
-  @override
-  String get paletteForest => 'Forest';
-
-  @override
-  String get paletteHimalaya => 'Himalayan night';
-
-  @override
-  String get paletteTerracotta => 'Terracotta';
-
-  @override
-  String get paletteRhododendron => 'Rhododendron';
-
-  @override
-  String get paletteLake => 'Lake';
-
-  @override
-  String get paletteMaroon => 'Maroon';
 }

@@ -1,15 +1,15 @@
 // Renders the Patro app icon: a calendar page with a Himalayan peak and sun,
-// in the app's forest green and lime.
+// in the app's maroon and gold.
 // Usage: swift tool/icon/render_icon.swift <out-dir>
 // Writes icon.png (full, 1024), foreground.png (adaptive foreground,
 // transparent, content in the safe zone) and monochrome.png (themed icons).
 import AppKit
 
-// Forest palette, matching the app: deep green, lime highlights.
-let forest = NSColor(red: 0x2E / 255, green: 0x4A / 255, blue: 0x24 / 255, alpha: 1)
-let forestDark = NSColor(red: 0x14 / 255, green: 0x1C / 255, blue: 0x11 / 255, alpha: 1)
-let forestLight = NSColor(red: 0x3B / 255, green: 0x5A / 255, blue: 0x2E / 255, alpha: 1)
-let lime = NSColor(red: 0xBA / 255, green: 0xD4 / 255, blue: 0x5F / 255, alpha: 1)
+// Maroon palette, matching the app: maroon with gold.
+let maroon = NSColor(red: 0x7A / 255, green: 0x1F / 255, blue: 0x1F / 255, alpha: 1)
+let maroonDark = NSColor(red: 0x5C / 255, green: 0x16 / 255, blue: 0x16 / 255, alpha: 1)
+let maroonLight = NSColor(red: 0x9A / 255, green: 0x2E / 255, blue: 0x2A / 255, alpha: 1)
+let gold = NSColor(red: 0xD9 / 255, green: 0x9E / 255, blue: 0x3A / 255, alpha: 1)
 let cream = NSColor(red: 0xFB / 255, green: 0xF5 / 255, blue: 0xEC / 255, alpha: 1)
 let snow = NSColor.white
 
@@ -33,7 +33,7 @@ func render(_ mode: Mode, size: Int = 1024) -> NSBitmapImageRep {
     ctx.scaleBy(x: CGFloat(size) / 1024, y: CGFloat(size) / 1024)
 
     if mode == .full {
-        NSGradient(starting: forestLight, ending: forestDark)!
+        NSGradient(starting: maroonLight, ending: maroonDark)!
             .draw(in: NSRect(x: 0, y: 0, width: 1024, height: 1024), angle: -90)
     }
     // Adaptive layers are inset 16% by flutter_launcher_icons, which puts the
@@ -61,18 +61,18 @@ func render(_ mode: Mode, size: Int = 1024) -> NSBitmapImageRep {
     pagePath.addClip()
     // Header strip
     if mode != .monochrome {
-        lime.setFill(); NSRect(x: page.minX, y: 640, width: page.width, height: 140).fill()
+        gold.setFill(); NSRect(x: page.minX, y: 640, width: page.width, height: 140).fill()
     } else {
-        ink(lime).setFill(); NSRect(x: page.minX, y: 640, width: page.width, height: 22).fill()
+        ink(gold).setFill(); NSRect(x: page.minX, y: 640, width: page.width, height: 22).fill()
     }
     // Sun
-    ink(lime).setFill()
+    ink(gold).setFill()
     NSBezierPath(ovalIn: NSRect(x: 600, y: 470, width: 104, height: 104)).fill()
     // Distant range
-    (mode == .monochrome ? NSColor.white.withAlphaComponent(0.55) : forest.withAlphaComponent(0.35)).setFill()
+    (mode == .monochrome ? NSColor.white.withAlphaComponent(0.55) : maroon.withAlphaComponent(0.35)).setFill()
     poly([(222, 300), (330, 430), (400, 380), (470, 450), (560, 360), (680, 470), (802, 360), (802, 180), (222, 180)]).fill()
     // Main peak with a fishtail (Machhapuchhre) summit
-    ink(forest).setFill()
+    ink(maroon).setFill()
     poly([(222, 250), (360, 400), (420, 360), (515, 560), (548, 520), (572, 548), (700, 330),
           (760, 360), (802, 320), (802, 180), (222, 180)]).fill()
     // Snow
@@ -87,7 +87,7 @@ func render(_ mode: Mode, size: Int = 1024) -> NSBitmapImageRep {
         let ring = NSBezierPath(roundedRect: NSRect(x: x - 24, y: 720, width: 48, height: 128), xRadius: 24, yRadius: 24)
         ink(mode == .monochrome ? .white : cream).setFill(); ring.fill()
         if mode != .monochrome {
-            forestDark.withAlphaComponent(0.35).setStroke(); ring.lineWidth = 6; ring.stroke()
+            maroonDark.withAlphaComponent(0.35).setStroke(); ring.lineWidth = 6; ring.stroke()
         }
     }
 

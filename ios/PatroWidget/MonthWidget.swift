@@ -20,9 +20,9 @@ private struct MonthWidgetView: View {
     let day: DaySnapshot
 
     private var labels: Labels { day.labels }
-    /// The photo theme only covers the header band; the grid uses sage.
+    /// The photo theme only covers the header band; the grid stays on cream.
     private var headerTheme: WidgetTheme { day.theme }
-    private var theme: WidgetTheme { day.theme.kind == .photo ? .sage : day.theme }
+    private var theme: WidgetTheme { day.theme.kind == .photo ? .cream : day.theme }
 
     /// BS day numbers laid out Sun–Sat, padded with nils to whole weeks.
     private var weeks: [[Int?]] {

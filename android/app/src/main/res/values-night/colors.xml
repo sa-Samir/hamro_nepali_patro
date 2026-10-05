@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Lime and light tones read on a dark shade / dark widgets. -->
-    <color name="widget_card">#141C11</color>
-    <color name="widget_text">#F9F5F0</color>
-    <color name="widget_muted">#A9ABA6</color>
-    <color name="widget_number">#BAD45F</color>
-    <color name="widget_gold">#D9C98A</color>
-    <color name="widget_holiday">#F2937D</color>
-    <color name="widget_hair">#26FFFFFF</color>
-    <color name="widget_today_bg">#BAD45F</color>
-    <color name="widget_today_text">#0C1008</color>
+    <!-- Cream widget theme in dark mode: rose and gold on dark brown. -->
+    <color name="widget_card">#201A17</color>
+    <color name="widget_text">#F1E6DC</color>
+    <color name="widget_muted">#B9A193</color>
+    <color name="widget_number">#E8A39A</color>
+    <color name="widget_gold">#E0B25C</color>
+    <color name="widget_holiday">#FF8A80</color>
+    <color name="widget_hair">#3A302A</color>
+    <color name="widget_today_bg">#E8A39A</color>
+    <color name="widget_today_text">#2B1A14</color>
 </resources>
