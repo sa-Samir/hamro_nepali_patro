@@ -22,8 +22,26 @@ import '../widgets/month_grid.dart';
 /// Space left at the bottom for the floating navigation bar.
 const navClearance = 112.0;
 
-class CalendarPage extends StatelessWidget {
+class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
+
+  @override
+  State<CalendarPage> createState() => _CalendarPageState();
+}
+
+class _CalendarPageState extends State<CalendarPage> {
+  final _gridKey = GlobalKey();
+
+  /// Selects [date] and scrolls up so the grid and the day card show it.
+  void _showDay(BsDate date) {
+    context.read<CalendarCubit>().select(date);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final target = _gridKey.currentContext;
+      if (target != null && target.mounted) {
+        Scrollable.ensureVisible(target, duration: const Duration(milliseconds: 450), curve: Curves.easeOutCubic);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +60,36 @@ class CalendarPage extends StatelessWidget {
           final season = settings.previewSeason ?? Season.ofMonth(state.visibleMonth.month);
           return SafeArea(
             bottom: false,
-            child: ListView(
+            // Not a lazy ListView: the grid must stay built so tapping an
+            // event further down can scroll back to it.
+            child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, navClearance),
-              children: [
-                _GreetingRow(state: state, season: season),
-                const SizedBox(height: 18),
-                _MonthHeading(state: state),
-                const SizedBox(height: 16),
-                GlassCard(
-                  padding: const EdgeInsets.fromLTRB(8, 14, 8, 8),
-                  child: Column(
-                    children: [
-                      WeekdayHeader(fmt: context.fmt),
-                      const SizedBox(height: 6),
-                      _MonthPager(state: state, index: index, showAd: settings.showAdInCalendar),
-                    ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _GreetingRow(state: state, season: season),
+                  const SizedBox(height: 18),
+                  _MonthHeading(state: state),
+                  const SizedBox(height: 16),
+                  GlassCard(
+                    key: _gridKey,
+                    padding: const EdgeInsets.fromLTRB(8, 14, 8, 8),
+                    child: Column(
+                      children: [
+                        WeekdayHeader(fmt: context.fmt),
+                        const SizedBox(height: 6),
+                        _MonthPager(state: state, index: index, showAd: settings.showAdInCalendar),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                _DayHeroCard(date: state.selected, events: index.on(state.selected), season: season),
-                const SizedBox(height: 16),
-                const _QuickActions(),
-                const SizedBox(height: 24),
-                _UpcomingSection(state: state, index: index),
-              ],
+                  const SizedBox(height: 16),
+                  _DayHeroCard(date: state.selected, events: index.on(state.selected), season: season),
+                  const SizedBox(height: 16),
+                  const _QuickActions(),
+                  const SizedBox(height: 24),
+                  _UpcomingSection(state: state, index: index, onShowDay: _showDay),
+                ],
+              ),
             ),
           );
         },
@@ -456,10 +480,11 @@ class _QuickActions extends StatelessWidget {
 /// Next holidays, festivals and reminders from today; when another month is
 /// on screen, that month's events instead.
 class _UpcomingSection extends StatelessWidget {
-  const _UpcomingSection({required this.state, required this.index});
+  const _UpcomingSection({required this.state, required this.index, required this.onShowDay});
 
   final CalendarState state;
   final EventIndex index;
+  final ValueChanged<BsDate> onShowDay;
 
   @override
   Widget build(BuildContext context) {
@@ -484,7 +509,7 @@ class _UpcomingSection extends StatelessWidget {
           for (final e in events)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: EventCard(event: e, today: state.today),
+              child: EventCard(event: e, today: state.today, onShowDay: onShowDay),
             ),
       ],
     );
@@ -493,10 +518,13 @@ class _UpcomingSection extends StatelessWidget {
 
 /// A holiday, festival or reminder: date tile, title, when, countdown pill.
 class EventCard extends StatelessWidget {
-  const EventCard({super.key, required this.event, required this.today});
+  const EventCard({super.key, required this.event, required this.today, this.onShowDay});
 
   final DayEvent event;
   final BsDate today;
+
+  /// Called for holidays and festivals; defaults to just selecting the day.
+  final ValueChanged<BsDate>? onShowDay;
 
   @override
   Widget build(BuildContext context) {
@@ -517,6 +545,8 @@ class EventCard extends StatelessWidget {
       onTap: () {
         if (event.note != null) {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => NoteEditorPage(note: event.note)));
+        } else if (onShowDay != null) {
+          onShowDay!(event.date);
         } else {
           context.read<CalendarCubit>().select(event.date);
         }
