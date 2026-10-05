@@ -157,7 +157,7 @@ class _ResultCard extends StatelessWidget {
     final fmt = context.fmt;
     final p = context.patro;
     const ink = Color(0xFFF9F5F0);
-    const lime = Color(0xFFBAD45F);
+    final accent = p.bright;
     final isBs = state.direction == ConversionDirection.bsToAd;
     final ad = state.date.toAd();
     final days = state.daysFromToday;
@@ -170,20 +170,17 @@ class _ResultCard extends StatelessWidget {
     Widget chip(String text, {bool filled = false, IconData? icon}) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       decoration: BoxDecoration(
-        color: filled ? lime : Colors.white.withValues(alpha: 0.12),
+        color: filled ? accent : Colors.white.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: Colors.white.withValues(alpha: filled ? 0 : 0.16)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 15, color: filled ? const Color(0xFF0C1008) : ink),
-            const SizedBox(width: 6),
-          ],
+          if (icon != null) ...[Icon(icon, size: 15, color: filled ? p.onBright : ink), const SizedBox(width: 6)],
           Text(
             text,
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: filled ? const Color(0xFF0C1008) : ink),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: filled ? p.onBright : ink),
           ),
         ],
       ),
@@ -204,7 +201,7 @@ class _ResultCard extends StatelessWidget {
           gradient: RadialGradient(
             center: const Alignment(0.9, -1),
             radius: 1.2,
-            colors: [lime.withValues(alpha: 0.18), lime.withValues(alpha: 0)],
+            colors: [accent.withValues(alpha: 0.18), accent.withValues(alpha: 0)],
           ),
         ),
         padding: const EdgeInsets.all(20),
@@ -258,7 +255,7 @@ class _ResultCard extends StatelessWidget {
                 Expanded(
                   child: FilledButton.icon(
                     onPressed: () => openNoteEditor(context, state.date),
-                    style: FilledButton.styleFrom(backgroundColor: ink, foregroundColor: const Color(0xFF0C1008)),
+                    style: FilledButton.styleFrom(backgroundColor: ink, foregroundColor: p.deepInk),
                     icon: const Icon(Icons.notification_add_outlined, size: 18),
                     label: Text(l10n.remindShort, maxLines: 1, overflow: TextOverflow.ellipsis),
                   ),

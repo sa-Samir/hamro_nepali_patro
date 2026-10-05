@@ -618,4 +618,25 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get widgetThemeForestHint => 'एपजस्तै गाढा हरियो र कागती रङ';
+
+  @override
+  String get palette => 'रङ';
+
+  @override
+  String get paletteForest => 'वन';
+
+  @override
+  String get paletteHimalaya => 'हिमाली रात';
+
+  @override
+  String get paletteTerracotta => 'माटो';
+
+  @override
+  String get paletteRhododendron => 'गुराँस';
+
+  @override
+  String get paletteLake => 'ताल';
+
+  @override
+  String get paletteMaroon => 'मरुन';
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-/// Design tokens beyond Material's ColorScheme.
-///
-/// Dark is "forest": deep green with lime highlights. Light is "sage mist":
-/// airy frosted cards with deep-green highlights. Both share the same
-/// components (glass cards, day tiles, pill buttons, floating nav).
+import 'palettes.dart';
+
+export 'palettes.dart' show AppPalette;
+
+/// Design tokens beyond Material's ColorScheme, derived from the user's
+/// palette ([AppPalette]) in light or dark. Every palette shares the same
+/// components: glass cards, day tiles, pill buttons, floating nav.
 @immutable
 class PatroColors extends ThemeExtension<PatroColors> {
   const PatroColors({
@@ -25,6 +27,8 @@ class PatroColors extends ThemeExtension<PatroColors> {
     required this.headerStart,
     required this.headerEnd,
     required this.onHeader,
+    required this.bright,
+    required this.onBright,
   });
 
   /// Page background gradient.
@@ -62,44 +66,35 @@ class PatroColors extends ThemeExtension<PatroColors> {
   final Color headerEnd;
   final Color onHeader;
 
-  static const dark = PatroColors(
-    backgroundTop: Color(0xFF26331F),
-    backgroundBottom: Color(0xFF0C1008),
-    glow: Color(0x24BAD45F),
-    card: Color(0x12FFFFFF),
-    cardBorder: Color(0x1AFFFFFF),
-    highlight: Color(0xFFBAD45F),
-    onHighlight: Color(0xFF0C1008),
-    strongButton: Color(0xFFF9F5F0),
-    onStrongButton: Color(0xFF0C1008),
-    nav: Color(0xF01A2216),
-    accent: Color(0xFFD9C98A),
-    holiday: Color(0xFFF2937D),
-    muted: Color(0xFFA9ABA6),
-    tipBackground: Color(0xFF3B4A2E),
-    headerStart: Color(0xFF1E2A19),
-    headerEnd: Color(0xFF0C1008),
-    onHeader: Color(0xFFF9F5F0),
-  );
+  /// Text on the light pill buttons that sit on photos and dark cards.
+  Color get deepInk => headerEnd;
 
-  static const light = PatroColors(
-    backgroundTop: Color(0xFFDDE6D3),
-    backgroundBottom: Color(0xFFF7F4EE),
-    glow: Color(0x99FFFFFF),
-    card: Color(0xB3FFFFFF),
-    cardBorder: Color(0xE6FFFFFF),
-    highlight: Color(0xFF2E4A24),
-    onHighlight: Color(0xFFF9F5F0),
-    strongButton: Color(0xFF141A11),
-    onStrongButton: Color(0xFFF9F5F0),
-    nav: Color(0xF2FFFFFF),
-    accent: Color(0xFF8A6D1F),
-    holiday: Color(0xFFC4472F),
-    muted: Color(0xFF5E665C),
-    tipBackground: Color(0xFF2E4A24),
-    headerStart: Color(0xFF2E4A24),
-    headerEnd: Color(0xFF141A11),
-    onHeader: Color(0xFFF9F5F0),
+  /// Accent for chips and buttons on photos and dark cards (both modes).
+  final Color bright;
+  final Color onBright;
+
+  factory PatroColors.from(PaletteSpec c, {required bool dark}) => PatroColors(
+    backgroundTop: c.backgroundTop,
+    backgroundBottom: c.backgroundBottom,
+    glow: dark ? c.highlight.withValues(alpha: 0.14) : const Color(0x99FFFFFF),
+    card: dark ? const Color(0x12FFFFFF) : const Color(0xB3FFFFFF),
+    cardBorder: dark ? const Color(0x1AFFFFFF) : const Color(0xE6FFFFFF),
+    highlight: c.highlight,
+    onHighlight: c.onHighlight,
+    strongButton: dark ? c.ink : c.deepest,
+    onStrongButton: dark ? c.deepest : const Color(0xFFF9F5F0),
+    nav: dark
+        ? Color.alphaBlend(const Color(0x14FFFFFF), c.backgroundBottom).withValues(alpha: 0.94)
+        : const Color(0xF2FFFFFF),
+    accent: c.accent,
+    holiday: c.holiday,
+    muted: c.muted,
+    tipBackground: c.deep,
+    headerStart: c.deep,
+    headerEnd: c.deepest,
+    onHeader: const Color(0xFFF9F5F0),
+    bright: c.bright,
+    onBright: Color.alphaBlend(const Color(0xCC000000), c.bright),
   );
 
   @override
@@ -127,6 +122,8 @@ class PatroColors extends ThemeExtension<PatroColors> {
       headerStart: l(headerStart, other.headerStart),
       headerEnd: l(headerEnd, other.headerEnd),
       onHeader: l(onHeader, other.onHeader),
+      bright: l(bright, other.bright),
+      onBright: l(onBright, other.onBright),
     );
   }
 }
@@ -150,50 +147,34 @@ TextStyle serif(double size, Color color, {FontWeight weight = FontWeight.w400, 
 );
 
 class AppTheme {
-  static ThemeData light() => _build(
-    const ColorScheme.light(
-      primary: Color(0xFF2E4A24),
-      onPrimary: Color(0xFFF9F5F0),
-      primaryContainer: Color(0xFFD5E3C3),
-      onPrimaryContainer: Color(0xFF141A11),
-      secondaryContainer: Color(0xFFE3EBD8),
-      onSecondaryContainer: Color(0xFF141A11),
-      // Material's default tertiary is cyan (time picker AM/PM etc.).
-      tertiary: Color(0xFF8A6D1F),
-      tertiaryContainer: Color(0xFFD5E3C3),
-      onTertiaryContainer: Color(0xFF141A11),
-      surface: Color(0xFFF7F4EE),
-      onSurface: Color(0xFF141A11),
-      surfaceContainerLow: Color(0xCCFFFFFF),
-      surfaceContainer: Color(0xFFEFF2EA),
-      surfaceContainerHigh: Color(0xFFE6EBE0),
-      outlineVariant: Color(0xFFDCE3D5),
-      error: Color(0xFFC4472F),
-    ),
-    PatroColors.light,
-  );
+  static ThemeData light([AppPalette palette = AppPalette.forest]) => _from(palettes[palette]!.light, dark: false);
 
-  static ThemeData dark() => _build(
-    const ColorScheme.dark(
-      primary: Color(0xFFBAD45F),
-      onPrimary: Color(0xFF0C1008),
-      primaryContainer: Color(0xFF3B4A2E),
-      onPrimaryContainer: Color(0xFFF9F5F0),
-      secondaryContainer: Color(0xFF2E3A26),
-      onSecondaryContainer: Color(0xFFF9F5F0),
-      tertiary: Color(0xFFD9C98A),
-      tertiaryContainer: Color(0xFFBAD45F),
-      onTertiaryContainer: Color(0xFF0C1008),
-      surface: Color(0xFF0C1008),
-      onSurface: Color(0xFFF9F5F0),
-      surfaceContainerLow: Color(0x14FFFFFF),
-      surfaceContainer: Color(0xFF1A2216),
-      surfaceContainerHigh: Color(0xFF232D1E),
-      outlineVariant: Color(0x26FFFFFF),
-      error: Color(0xFFF2937D),
-    ),
-    PatroColors.dark,
-  );
+  static ThemeData dark([AppPalette palette = AppPalette.forest]) => _from(palettes[palette]!.dark, dark: true);
+
+  static ThemeData _from(PaletteSpec c, {required bool dark}) {
+    Color over(Color tint, double a, Color base) => Color.alphaBlend(tint.withValues(alpha: a), base);
+    final container = over(c.highlight, dark ? 0.22 : 0.14, c.backgroundBottom);
+    final scheme = (dark ? const ColorScheme.dark() : const ColorScheme.light()).copyWith(
+      primary: c.highlight,
+      onPrimary: c.onHighlight,
+      primaryContainer: container,
+      onPrimaryContainer: c.ink,
+      secondaryContainer: container,
+      onSecondaryContainer: c.ink,
+      // Material's default tertiary is cyan (time picker AM/PM etc.).
+      tertiary: c.accent,
+      tertiaryContainer: dark ? c.highlight : container,
+      onTertiaryContainer: dark ? c.onHighlight : c.ink,
+      surface: c.backgroundBottom,
+      onSurface: c.ink,
+      surfaceContainerLow: dark ? const Color(0x14FFFFFF) : const Color(0xCCFFFFFF),
+      surfaceContainer: over(c.highlight, dark ? 0.10 : 0.05, dark ? c.backgroundBottom : const Color(0xFFFBFAF7)),
+      surfaceContainerHigh: over(c.highlight, dark ? 0.16 : 0.09, dark ? c.backgroundBottom : const Color(0xFFF7F6F2)),
+      outlineVariant: dark ? const Color(0x26FFFFFF) : over(c.muted, 0.22, c.backgroundBottom),
+      error: c.holiday,
+    );
+    return _build(scheme, PatroColors.from(c, dark: dark));
+  }
 
   static ThemeData _build(ColorScheme scheme, PatroColors patro) {
     final base = ThemeData(colorScheme: scheme, useMaterial3: true);

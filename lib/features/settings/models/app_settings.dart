@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/palettes.dart';
 import '../../calendar/models/season.dart';
 
 enum AppLanguage {
@@ -23,6 +24,7 @@ class AppSettings extends Equatable {
     this.language = AppLanguage.ne,
     this.numerals = NumeralStyle.devanagari,
     this.themeMode = ThemeMode.system,
+    this.palette = AppPalette.forest,
     this.showAdInCalendar = true,
     this.reminderMinutes = 8 * 60,
     this.todayNotification = false,
@@ -37,6 +39,7 @@ class AppSettings extends Equatable {
   final AppLanguage language;
   final NumeralStyle numerals;
   final ThemeMode themeMode;
+  final AppPalette palette;
   final bool showAdInCalendar;
 
   /// Default reminder time for new notes, in minutes after midnight.
@@ -58,6 +61,7 @@ class AppSettings extends Equatable {
     AppLanguage? language,
     NumeralStyle? numerals,
     ThemeMode? themeMode,
+    AppPalette? palette,
     bool? showAdInCalendar,
     int? reminderMinutes,
     bool? todayNotification,
@@ -72,6 +76,7 @@ class AppSettings extends Equatable {
       language: language ?? this.language,
       numerals: numerals ?? this.numerals,
       themeMode: themeMode ?? this.themeMode,
+      palette: palette ?? this.palette,
       showAdInCalendar: showAdInCalendar ?? this.showAdInCalendar,
       reminderMinutes: reminderMinutes ?? this.reminderMinutes,
       todayNotification: todayNotification ?? this.todayNotification,
@@ -89,6 +94,7 @@ class AppSettings extends Equatable {
     language,
     numerals,
     themeMode,
+    palette,
     showAdInCalendar,
     reminderMinutes,
     todayNotification,

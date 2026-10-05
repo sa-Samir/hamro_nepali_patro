@@ -654,4 +654,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetThemeForestHint => 'Deep green with lime, like the app';
+
+  @override
+  String get palette => 'Palette';
+
+  @override
+  String get paletteForest => 'Forest';
+
+  @override
+  String get paletteHimalaya => 'Himalayan night';
+
+  @override
+  String get paletteTerracotta => 'Terracotta';
+
+  @override
+  String get paletteRhododendron => 'Rhododendron';
+
+  @override
+  String get paletteLake => 'Lake';
+
+  @override
+  String get paletteMaroon => 'Maroon';
 }

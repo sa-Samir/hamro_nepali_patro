@@ -1189,6 +1189,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deep green with lime, like the app'**
   String get widgetThemeForestHint;
+
+  /// No description provided for @palette.
+  ///
+  /// In en, this message translates to:
+  /// **'Palette'**
+  String get palette;
+
+  /// No description provided for @paletteForest.
+  ///
+  /// In en, this message translates to:
+  /// **'Forest'**
+  String get paletteForest;
+
+  /// No description provided for @paletteHimalaya.
+  ///
+  /// In en, this message translates to:
+  /// **'Himalayan night'**
+  String get paletteHimalaya;
+
+  /// No description provided for @paletteTerracotta.
+  ///
+  /// In en, this message translates to:
+  /// **'Terracotta'**
+  String get paletteTerracotta;
+
+  /// No description provided for @paletteRhododendron.
+  ///
+  /// In en, this message translates to:
+  /// **'Rhododendron'**
+  String get paletteRhododendron;
+
+  /// No description provided for @paletteLake.
+  ///
+  /// In en, this message translates to:
+  /// **'Lake'**
+  String get paletteLake;
+
+  /// No description provided for @paletteMaroon.
+  ///
+  /// In en, this message translates to:
+  /// **'Maroon'**
+  String get paletteMaroon;
 }
 
 class _AppLocalizationsDelegate

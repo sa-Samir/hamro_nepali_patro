@@ -181,5 +181,12 @@
   "addToHomeScreen": "होम स्क्रिनमा थप्नुहोस्",
   "settingsSubtitle": "परिवर्तन गर्न टाइल थिच्नुहोस्",
   "widgetThemeForest": "वन",
-  "widgetThemeForestHint": "एपजस्तै गाढा हरियो र कागती रङ"
+  "widgetThemeForestHint": "एपजस्तै गाढा हरियो र कागती रङ",
+  "palette": "रङ",
+  "paletteForest": "वन",
+  "paletteHimalaya": "हिमाली रात",
+  "paletteTerracotta": "माटो",
+  "paletteRhododendron": "गुराँस",
+  "paletteLake": "ताल",
+  "paletteMaroon": "मरुन"
 }

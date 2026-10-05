@@ -377,7 +377,7 @@ class _DayHeroCard extends StatelessWidget {
                   width: double.infinity,
                   child: FilledButton.icon(
                     onPressed: () => openNoteEditor(context, date),
-                    style: FilledButton.styleFrom(backgroundColor: onPhoto, foregroundColor: const Color(0xFF0C1008)),
+                    style: FilledButton.styleFrom(backgroundColor: onPhoto, foregroundColor: p.deepInk),
                     icon: const Icon(Icons.notification_add_outlined, size: 20),
                     label: Text(l10n.remindMe),
                   ),
@@ -400,10 +400,10 @@ class _PhotoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Lime reads well on the dark photo wash in both light and dark mode.
-    const lime = Color(0xFFBAD45F);
-    final fill = highlighted ? lime : Colors.white.withValues(alpha: 0.16);
-    final ink = highlighted ? const Color(0xFF0C1008) : const Color(0xFFF9F5F0);
+    // The palette's bright accent reads on the dark photo wash in both modes.
+    final p = context.patro;
+    final fill = highlighted ? p.bright : Colors.white.withValues(alpha: 0.16);
+    final ink = highlighted ? p.onBright : const Color(0xFFF9F5F0);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       decoration: BoxDecoration(

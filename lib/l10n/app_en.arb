@@ -309,5 +309,12 @@
   "addToHomeScreen": "Add to home screen",
   "settingsSubtitle": "Tap a tile to change it",
   "widgetThemeForest": "Forest",
-  "widgetThemeForestHint": "Deep green with lime, like the app"
+  "widgetThemeForestHint": "Deep green with lime, like the app",
+  "palette": "Palette",
+  "paletteForest": "Forest",
+  "paletteHimalaya": "Himalayan night",
+  "paletteTerracotta": "Terracotta",
+  "paletteRhododendron": "Rhododendron",
+  "paletteLake": "Lake",
+  "paletteMaroon": "Maroon"
 }
