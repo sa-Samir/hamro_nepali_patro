@@ -47,7 +47,7 @@ class CalendarPage extends StatelessWidget {
               children: [
                 _GreetingRow(state: state, season: season),
                 const SizedBox(height: 18),
-                _MonthHeading(state: state, season: season),
+                _MonthHeading(state: state),
                 const SizedBox(height: 16),
                 GlassCard(
                   padding: const EdgeInsets.fromLTRB(8, 14, 8, 8),
@@ -77,7 +77,8 @@ class CalendarPage extends StatelessWidget {
 Future<void> openNoteEditor(BuildContext context, BsDate date) =>
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => NoteEditorPage(initialDate: date)));
 
-/// "नमस्ते / आज, असोज १९" with a season-photo avatar and header actions.
+/// "नमस्ते / नेपाली पात्रो · शरद ऋतु" with a season-photo avatar and header actions.
+/// Today's date is left to the grid and the day card so it appears only once.
 class _GreetingRow extends StatelessWidget {
   const _GreetingRow({required this.state, required this.season});
 
@@ -87,10 +88,8 @@ class _GreetingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final fmt = context.fmt;
     final p = context.patro;
     final cubit = context.read<CalendarCubit>();
-    final today = state.today;
     return Row(
       children: [
         CircleAvatar(radius: 22, backgroundImage: AssetImage(season.asset)),
@@ -101,7 +100,7 @@ class _GreetingRow extends StatelessWidget {
             children: [
               Text(l10n.greeting, style: TextStyle(color: p.muted, fontSize: 13)),
               Text(
-                l10n.todayIs('${fmt.monthName(today.month)} ${fmt.number(today.day)}, ${fmt.number(today.year)}'),
+                '${l10n.nepaliCalendar} · ${seasonName(l10n, season)}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
@@ -124,12 +123,11 @@ class _GreetingRow extends StatelessWidget {
   }
 }
 
-/// Large serif month + year, AD span and season, with month arrows.
+/// Large serif month + year and AD span, with month arrows.
 class _MonthHeading extends StatelessWidget {
-  const _MonthHeading({required this.state, required this.season});
+  const _MonthHeading({required this.state});
 
   final CalendarState state;
-  final Season season;
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +162,7 @@ class _MonthHeading extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    '${fmt.adSpan(month)} · ${seasonName(l10n, season)}',
+                    fmt.adSpan(month),
                     style: TextStyle(color: p.muted, fontSize: 13),
                   ),
                   if (BsDate.isEstimatedYear(month.year)) _EstimatedChip(year: month.year),
@@ -330,27 +328,11 @@ class _DayHeroCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            fmt.weekday(date.weekday),
-                            style: TextStyle(color: onPhoto.withValues(alpha: 0.8), fontSize: 13),
-                          ),
-                          Text(fmt.bsDate(date), style: serif(30, onPhoto)),
-                          Text(
-                            fmt.adDateFull(date.toAd()),
-                            style: TextStyle(color: onPhoto.withValues(alpha: 0.8), fontSize: 13),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(fmt.number(date.day), style: serif(64, onPhoto, height: 0.9)),
-                  ],
+                Text(fmt.bsDate(date), style: serif(32, onPhoto)),
+                const SizedBox(height: 2),
+                Text(
+                  '${fmt.weekday(date.weekday)} · ${fmt.adDateFull(date.toAd())}',
+                  style: TextStyle(color: onPhoto.withValues(alpha: 0.8), fontSize: 13),
                 ),
                 const SizedBox(height: 12),
                 Wrap(
