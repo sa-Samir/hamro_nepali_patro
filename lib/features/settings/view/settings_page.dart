@@ -164,29 +164,58 @@ class _SettingsTile extends StatelessWidget {
 
 /// Opens a category sheet that rebuilds as settings change.
 Future<void> _openSheet(BuildContext context, String title, _SheetBuilder builder) {
-  final p = context.patro;
+  // The sheet paints its own background inside the builder: a colour passed
+  // to showModalBottomSheet is fixed when it opens and would stay light after
+  // switching to dark mode from the Look sheet.
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    showDragHandle: true,
     useSafeArea: true,
-    backgroundColor: p.backgroundBottom,
+    backgroundColor: Colors.transparent,
     builder: (sheetContext) => BlocBuilder<SettingsCubit, AppSettings>(
-      builder: (context, s) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.75,
-        minChildSize: 0.4,
-        maxChildSize: 0.95,
-        builder: (context, controller) => ListView(
-          controller: controller,
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
-          children: [
-            Text(title, style: serif(34, Theme.of(context).colorScheme.onSurface)),
-            const SizedBox(height: 16),
-            ...builder(context, s),
-          ],
+      builder: (context, s) => _SheetBackground(
+        child: DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.75,
+          minChildSize: 0.4,
+          maxChildSize: 0.95,
+          builder: (context, controller) => ListView(
+            controller: controller,
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+            children: [
+              Text(title, style: serif(34, Theme.of(context).colorScheme.onSurface)),
+              const SizedBox(height: 16),
+              ...builder(context, s),
+            ],
+          ),
         ),
       ),
+    ),
+  );
+}
+
+class _SheetBackground extends StatelessWidget {
+  const _SheetBackground({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => AnimatedContainer(
+    duration: const Duration(milliseconds: 200),
+    decoration: BoxDecoration(
+      color: context.patro.backgroundBottom,
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+    ),
+    child: Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 12),
+          width: 36,
+          height: 4,
+          decoration: BoxDecoration(color: context.patro.muted, borderRadius: BorderRadius.circular(2)),
+        ),
+        Flexible(child: child),
+      ],
     ),
   );
 }
