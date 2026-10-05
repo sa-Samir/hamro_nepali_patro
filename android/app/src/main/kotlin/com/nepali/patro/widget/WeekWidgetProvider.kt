@@ -36,7 +36,8 @@ class WeekWidgetProvider : PatroWidgetProvider() {
                     else -> p.text
                 }
                 setTextColor(DAY_IDS[i], textColor)
-                if (date == today) setInt(DAY_IDS[i], "setBackgroundResource", p.todayCell)
+                // Set every cell: the layout carries a sample highlight for the picker preview.
+                setInt(DAY_IDS[i], "setBackgroundResource", if (date == today) p.todayCell else 0)
             }
             val next = d.upcoming.firstOrNull()
             setOptionalText(
