@@ -32,7 +32,7 @@
             android:maxLines="1"
             android:paddingVertical="7dp"
             android:text="असोज २०८३"
-            android:textColor="@color/patro_on_primary"
+            android:textColor="@color/widget_today_text"
             android:textSize="12sp"
             android:textStyle="bold" />
 

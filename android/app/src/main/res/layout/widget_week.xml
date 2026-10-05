@@ -196,13 +196,13 @@
                 <TextView
                     android:id="@+id/d4"
                 android:text="१५"
-                android:background="@drawable/notification_week_today"
+                android:background="@drawable/widget_today_cell"
                     android:layout_width="32dp"
                     android:layout_height="26dp"
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:textColor="@color/patro_on_primary"
+                    android:textColor="@color/widget_today_text"
                     android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout

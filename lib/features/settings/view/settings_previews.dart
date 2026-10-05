@@ -393,12 +393,19 @@ class NotificationPreview extends StatelessWidget {
 /// Colours of the home-screen widget themes (kept in step with
 /// android/.../widget/WidgetTheme.kt and ios/PatroWidget/Theme.swift).
 ({Color bg, Color text, Color muted, Color number, Color gold}) _widgetPalette(WidgetTheme theme) => switch (theme) {
+  WidgetTheme.forest => (
+    bg: const Color(0xFF141C11),
+    text: const Color(0xFFF9F5F0),
+    muted: const Color(0xFFA9ABA6),
+    number: const Color(0xFFBAD45F),
+    gold: const Color(0xFFD9C98A),
+  ),
   WidgetTheme.cream => (
-    bg: const Color(0xFFFBF5EC),
-    text: const Color(0xFF2B1A14),
-    muted: const Color(0xFF7A6558),
-    number: const Color(0xFF7A1F1F),
-    gold: const Color(0xFFA8711A),
+    bg: const Color(0xFFF7F4EE),
+    text: const Color(0xFF141A11),
+    muted: const Color(0xFF5E665C),
+    number: const Color(0xFF2E4A24),
+    gold: const Color(0xFF8A6D1F),
   ),
   WidgetTheme.photo => (
     bg: const Color(0xFF3A1712),

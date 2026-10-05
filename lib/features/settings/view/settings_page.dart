@@ -173,13 +173,15 @@ Future<void> _openSheet(BuildContext context, String title, _SheetBuilder builde
     useSafeArea: true,
     backgroundColor: Colors.transparent,
     builder: (sheetContext) => BlocBuilder<SettingsCubit, AppSettings>(
-      builder: (context, s) => _SheetBackground(
-        child: DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.75,
-          minChildSize: 0.4,
-          maxChildSize: 0.95,
-          builder: (context, controller) => ListView(
+      builder: (context, s) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.75,
+        minChildSize: 0.4,
+        maxChildSize: 0.95,
+        // The background lives inside the draggable area so it is exactly as
+        // tall as the sheet.
+        builder: (context, controller) => _SheetBackground(
+          child: ListView(
             controller: controller,
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
             children: [
@@ -214,7 +216,7 @@ class _SheetBackground extends StatelessWidget {
           height: 4,
           decoration: BoxDecoration(color: context.patro.muted, borderRadius: BorderRadius.circular(2)),
         ),
-        Flexible(child: child),
+        Expanded(child: child),
       ],
     ),
   );
@@ -498,6 +500,7 @@ List<Widget> _aboutSheet(BuildContext context, AppSettings s) {
 };
 
 (String, String) _widgetThemeLabel(AppLocalizations l10n, WidgetTheme theme) => switch (theme) {
+  WidgetTheme.forest => (l10n.widgetThemeForest, l10n.widgetThemeForestHint),
   WidgetTheme.photo => (l10n.widgetThemePhoto, l10n.widgetThemePhotoHint),
   WidgetTheme.maroon => (l10n.widgetThemeMaroon, l10n.widgetThemeMaroonHint),
   WidgetTheme.marigold => (l10n.widgetThemeMarigold, l10n.widgetThemeMarigoldHint),

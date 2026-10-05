@@ -262,8 +262,8 @@
   "widgetThemeMaroonHint": "Deep maroon with marigold accents",
   "widgetThemeMarigold": "Marigold",
   "widgetThemeMarigoldHint": "Warm marigold with maroon",
-  "widgetThemeCream": "Cream",
-  "widgetThemeCreamHint": "Light and quiet, follows dark mode",
+  "widgetThemeCream": "Sage",
+  "widgetThemeCreamHint": "Light, follows dark mode",
   "previewSeason": "Preview season",
   "previewSeasonAuto": "Automatic",
   "previewSeasonAutoHint": "Follows the calendar",
@@ -307,5 +307,7 @@
     }
   },
   "addToHomeScreen": "Add to home screen",
-  "settingsSubtitle": "Tap a tile to change it"
+  "settingsSubtitle": "Tap a tile to change it",
+  "widgetThemeForest": "Forest",
+  "widgetThemeForestHint": "Deep green with lime, like the app"
 }

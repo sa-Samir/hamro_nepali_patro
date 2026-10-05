@@ -989,13 +989,13 @@ abstract class AppLocalizations {
   /// No description provided for @widgetThemeCream.
   ///
   /// In en, this message translates to:
-  /// **'Cream'**
+  /// **'Sage'**
   String get widgetThemeCream;
 
   /// No description provided for @widgetThemeCreamHint.
   ///
   /// In en, this message translates to:
-  /// **'Light and quiet, follows dark mode'**
+  /// **'Light, follows dark mode'**
   String get widgetThemeCreamHint;
 
   /// No description provided for @previewSeason.
@@ -1177,6 +1177,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a tile to change it'**
   String get settingsSubtitle;
+
+  /// No description provided for @widgetThemeForest.
+  ///
+  /// In en, this message translates to:
+  /// **'Forest'**
+  String get widgetThemeForest;
+
+  /// No description provided for @widgetThemeForestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Deep green with lime, like the app'**
+  String get widgetThemeForestHint;
 }
 
 class _AppLocalizationsDelegate

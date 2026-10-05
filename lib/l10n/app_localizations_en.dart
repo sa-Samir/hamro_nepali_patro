@@ -543,10 +543,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetThemeMarigoldHint => 'Warm marigold with maroon';
 
   @override
-  String get widgetThemeCream => 'Cream';
+  String get widgetThemeCream => 'Sage';
 
   @override
-  String get widgetThemeCreamHint => 'Light and quiet, follows dark mode';
+  String get widgetThemeCreamHint => 'Light, follows dark mode';
 
   @override
   String get previewSeason => 'Preview season';
@@ -648,4 +648,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSubtitle => 'Tap a tile to change it';
+
+  @override
+  String get widgetThemeForest => 'Forest';
+
+  @override
+  String get widgetThemeForestHint => 'Deep green with lime, like the app';
 }

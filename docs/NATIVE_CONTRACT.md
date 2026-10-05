@@ -34,7 +34,7 @@ Keys (written by Flutter, read by native):
 | `lang` | String `"ne"` / `"en"` | UI language for labels (month/weekday names, captions) |
 | `numerals` | String `"ne"` / `"en"` | Digits used for numbers: Devanagari (०-९) or Western |
 | `events` | String (JSON) | Upcoming items, see below |
-| `widget_theme` | String | `photo` (season photo + dark wash), `maroon`, `marigold` or `cream` (follows dark mode). Missing → `cream`. |
+| `widget_theme` | String | `forest` (deep green + lime), `photo` (season photo + dark wash), `maroon`, `marigold` or `cream` (sage; follows dark mode). Missing → `forest`. |
 | `season_override` | String | Settings → Preview season: a season name (`basanta`, `grishma`, `barsha`, `sharad`, `hemanta`, `shishir`) whose photo replaces the current one; empty = follow the BS month. |
 | `tithis` | String (JSON) | Sunrise tithi by AD date, yesterday → today + 120 days: `{"2026-10-01": 20}`. 1–15 shukla (15 = purnima), 16–30 krishna (30 = aunsi). Missing dates mean "don't show a tithi". |
 | `bs_overrides` | String (JSON) | Official month-length corrections downloaded by the app, e.g. `{"2084": [31, 32, …]}`. Native converters replace those rows of the generated table and ignore invalid rows. |

@@ -38,7 +38,10 @@ internal class WidgetPalette(
 
 /** The user's widget theme (`widget_theme`, set in the app's Settings). */
 internal enum class WidgetTheme(private val key: String) {
-    /** Cream card; the only theme with a separate dark-mode version (values-night). */
+    /** Deep forest green with lime, like the app's dark mode. */
+    FOREST("forest"),
+
+    /** Sage card; the only theme with a separate dark-mode version (values-night). */
     CREAM("cream"),
 
     /** The season's photo under a dark wash, like the app header. */
@@ -48,6 +51,21 @@ internal enum class WidgetTheme(private val key: String) {
     ;
 
     fun palette(context: Context): WidgetPalette = when (this) {
+        FOREST -> WidgetPalette(
+            text = 0xFFF9F5F0.toInt(),
+            muted = 0xFFA9ABA6.toInt(),
+            number = LIME,
+            gold = 0xFFD9C98A.toInt(),
+            holiday = 0xFFF2937D.toInt(),
+            saturday = 0xFFD9C98A.toInt(),
+            sunday = 0xFFF9F5F0.toInt(),
+            hair = 0x26FFFFFF,
+            todayText = INK,
+            todayCell = R.drawable.widget_today_lime,
+            background = R.drawable.widget_bg_forest,
+            deskStrip = R.drawable.widget_desk_strip_lime,
+            deskStripText = INK,
+        )
         CREAM -> WidgetPalette(
             text = color(context, R.color.widget_text),
             muted = color(context, R.color.widget_muted),
@@ -57,11 +75,11 @@ internal enum class WidgetTheme(private val key: String) {
             saturday = color(context, R.color.widget_gold),
             sunday = color(context, R.color.widget_number),
             hair = color(context, R.color.widget_hair),
-            todayText = WHITE,
-            todayCell = R.drawable.notification_week_today,
+            todayText = color(context, R.color.widget_today_text),
+            todayCell = R.drawable.widget_today_cell,
             background = R.drawable.widget_bg,
             deskStrip = R.drawable.widget_desk_strip,
-            deskStripText = WHITE,
+            deskStripText = color(context, R.color.widget_today_text),
         )
         PHOTO -> WidgetPalette(
             text = WHITE,
@@ -103,9 +121,9 @@ internal enum class WidgetTheme(private val key: String) {
             sunday = 0xFF7A1F1F.toInt(),
             hair = 0x337A1F1F,
             todayText = WHITE,
-            todayCell = R.drawable.notification_week_today,
+            todayCell = R.drawable.widget_today_maroon,
             background = R.drawable.widget_bg_marigold,
-            deskStrip = R.drawable.widget_desk_strip,
+            deskStrip = R.drawable.widget_desk_strip_maroon,
             deskStripText = WHITE,
         )
     }
@@ -113,8 +131,10 @@ internal enum class WidgetTheme(private val key: String) {
     companion object {
         private const val WHITE = 0xFFFFFFFF.toInt()
         private const val MARIGOLD_ACCENT = 0xFFF2C66D.toInt()
+        private const val LIME = 0xFFBAD45F.toInt()
+        private const val INK = 0xFF0C1008.toInt()
 
-        fun from(key: String?): WidgetTheme = entries.firstOrNull { it.key == key } ?: CREAM
+        fun from(key: String?): WidgetTheme = entries.firstOrNull { it.key == key } ?: FOREST
     }
 }
 

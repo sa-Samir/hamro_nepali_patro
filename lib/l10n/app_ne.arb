@@ -148,8 +148,8 @@
   "widgetThemeMaroonHint": "सयपत्री रङसहित गाढा मरुन",
   "widgetThemeMarigold": "सयपत्री",
   "widgetThemeMarigoldHint": "मरुनसहित न्यानो सयपत्री रङ",
-  "widgetThemeCream": "क्रिम",
-  "widgetThemeCreamHint": "हल्का र सादा, डार्क मोड अनुसार फेरिन्छ",
+  "widgetThemeCream": "हल्का हरियो",
+  "widgetThemeCreamHint": "हल्का, डार्क मोड अनुसार फेरिन्छ",
   "previewSeason": "ऋतु पूर्वावलोकन",
   "previewSeasonAuto": "स्वचालित",
   "previewSeasonAutoHint": "पात्रो अनुसार",
@@ -179,5 +179,7 @@
   "sampleReminder": "आमाको जन्मदिन",
   "reminderCountLabel": "{count} वटा सम्झना",
   "addToHomeScreen": "होम स्क्रिनमा थप्नुहोस्",
-  "settingsSubtitle": "परिवर्तन गर्न टाइल थिच्नुहोस्"
+  "settingsSubtitle": "परिवर्तन गर्न टाइल थिच्नुहोस्",
+  "widgetThemeForest": "वन",
+  "widgetThemeForestHint": "एपजस्तै गाढा हरियो र कागती रङ"
 }

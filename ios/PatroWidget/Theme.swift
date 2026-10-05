@@ -5,12 +5,14 @@ import UIKit
 /// Shared with the Android widgets and the app's notification designs.
 struct WidgetTheme {
     enum Kind: String {
-        case photo, maroon, marigold, cream
+        case forest, photo, maroon, marigold
+        /// Keeps the settings key of the earlier cream theme.
+        case sage = "cream"
     }
 
     let kind: Kind
-    /// Solid card colour; the photo theme draws the season photo instead.
-    let background: Color
+    /// Card colours top to bottom (one for a solid card); the photo theme draws the season photo instead.
+    let background: [Color]
     let text: Color
     let muted: Color
     /// Big day number and month + year.
@@ -27,10 +29,11 @@ struct WidgetTheme {
 
     static func named(_ name: String?) -> WidgetTheme {
         switch name.flatMap(Kind.init) {
+        case .sage: return .sage
         case .photo: return .photo
         case .maroon: return .maroon
         case .marigold: return .marigold
-        case .cream, nil: return .cream
+        case .forest, nil: return .forest
         }
     }
 
@@ -39,25 +42,42 @@ struct WidgetTheme {
         return weekday == 6 ? gold : text
     }
 
-    static let cream = WidgetTheme(
-        kind: .cream,
-        background: Color(light: 0xFBF5EC, dark: 0x201A17),
-        text: Color(light: 0x2B1A14, dark: 0xF1E6DC),
-        muted: Color(light: 0x7A6558, dark: 0xB9A193),
-        number: Color(light: 0x7A1F1F, dark: 0xE8A39A),
-        gold: Color(light: 0xA8711A, dark: 0xE0B25C),
-        holiday: Color(light: 0xC62828, dark: 0xFF8A80),
-        sundayHeader: Color(light: 0x7A1F1F, dark: 0xE8A39A),
-        hairline: Color(light: 0xE8DCCB, dark: 0x3A302A),
-        todayFill: Color(hex: 0x7A1F1F),
-        todayText: .white,
-        stripFill: Color(hex: 0x7A1F1F),
-        stripText: .white
+    static let forest = WidgetTheme(
+        kind: .forest,
+        background: [Color(hex: 0x26331F), Color(hex: 0x0C1008)],
+        text: Color(hex: 0xF9F5F0),
+        muted: Color(hex: 0xA9ABA6),
+        number: Color(hex: 0xBAD45F),
+        gold: Color(hex: 0xD9C98A),
+        holiday: Color(hex: 0xF2937D),
+        sundayHeader: Color(hex: 0xF9F5F0),
+        hairline: .white.opacity(0.15),
+        todayFill: Color(hex: 0xBAD45F),
+        todayText: Color(hex: 0x0C1008),
+        stripFill: Color(hex: 0xBAD45F),
+        stripText: Color(hex: 0x0C1008)
+    )
+
+    /// Follows the system light/dark appearance.
+    static let sage = WidgetTheme(
+        kind: .sage,
+        background: [Color(light: 0xF7F4EE, dark: 0x141C11)],
+        text: Color(light: 0x141A11, dark: 0xF9F5F0),
+        muted: Color(light: 0x5E665C, dark: 0xA9ABA6),
+        number: Color(light: 0x2E4A24, dark: 0xBAD45F),
+        gold: Color(light: 0x8A6D1F, dark: 0xD9C98A),
+        holiday: Color(light: 0xC4472F, dark: 0xF2937D),
+        sundayHeader: Color(light: 0x2E4A24, dark: 0xBAD45F),
+        hairline: Color(light: UIColor(hex: 0xDCE3D5), dark: UIColor.white.withAlphaComponent(0.15)),
+        todayFill: Color(light: 0x2E4A24, dark: 0xBAD45F),
+        todayText: Color(light: 0xF9F5F0, dark: 0x0C1008),
+        stripFill: Color(light: 0x2E4A24, dark: 0xBAD45F),
+        stripText: Color(light: 0xF9F5F0, dark: 0x0C1008)
     )
 
     static let maroon = WidgetTheme(
         kind: .maroon,
-        background: Color(hex: 0x6E1B1B),
+        background: [Color(hex: 0x6E1B1B)],
         text: .white,
         muted: Color(hex: 0xE8C9C0),
         number: .white,
@@ -73,7 +93,7 @@ struct WidgetTheme {
 
     static let marigold = WidgetTheme(
         kind: .marigold,
-        background: Color(hex: 0xF6D58E),
+        background: [Color(hex: 0xF6D58E)],
         text: Color(hex: 0x3A1A0E),
         muted: Color(hex: 0x6B4A2E),
         number: Color(hex: 0x7A1F1F),
@@ -89,7 +109,7 @@ struct WidgetTheme {
 
     static let photo = WidgetTheme(
         kind: .photo,
-        background: Color(hex: 0x3A0E0E),
+        background: [Color(hex: 0x3A0E0E)],
         text: .white,
         muted: Color(hex: 0xEADBD2),
         number: .white,
@@ -105,7 +125,7 @@ struct WidgetTheme {
 }
 
 private struct WidgetThemeKey: EnvironmentKey {
-    static let defaultValue = WidgetTheme.cream
+    static let defaultValue = WidgetTheme.forest
 }
 
 extension EnvironmentValues {
@@ -115,7 +135,7 @@ extension EnvironmentValues {
     }
 }
 
-/// The theme's card: a solid colour, or the season photo under a scrim.
+/// The theme's card: its colours, or the season photo under a scrim.
 struct ThemeBackground: View {
     let theme: WidgetTheme
     /// Season photo name, see `SeasonPhoto.name`.
@@ -143,7 +163,7 @@ struct ThemeBackground: View {
                 .clipped()
                 .overlay(Self.scrim)
         } else {
-            theme.background
+            LinearGradient(colors: theme.background, startPoint: .top, endPoint: .bottom)
         }
     }
 }
@@ -154,9 +174,11 @@ extension Color {
     }
 
     init(light: UInt32, dark: UInt32) {
-        self.init(uiColor: UIColor { traits in
-            UIColor(hex: traits.userInterfaceStyle == .dark ? dark : light)
-        })
+        self.init(light: UIColor(hex: light), dark: UIColor(hex: dark))
+    }
+
+    init(light: UIColor, dark: UIColor) {
+        self.init(uiColor: UIColor { $0.userInterfaceStyle == .dark ? dark : light })
     }
 }
 

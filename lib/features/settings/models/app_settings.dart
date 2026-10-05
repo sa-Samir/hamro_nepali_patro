@@ -16,7 +16,7 @@ enum NumeralStyle { devanagari, western }
 enum TodayNotificationStyle { number, page, moon, week, countdown, plain }
 
 /// Look of the home-screen widgets.
-enum WidgetTheme { photo, maroon, marigold, cream }
+enum WidgetTheme { forest, photo, maroon, marigold, cream }
 
 class AppSettings extends Equatable {
   const AppSettings({
@@ -29,7 +29,7 @@ class AppSettings extends Equatable {
     this.todayNotificationShowAd = true,
     this.todayNotificationShowEvents = true,
     this.todayNotificationStyle = TodayNotificationStyle.number,
-    this.widgetTheme = WidgetTheme.photo,
+    this.widgetTheme = WidgetTheme.forest,
     this.previewSeason,
     this.tipDismissed = false,
   });

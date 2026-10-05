@@ -354,8 +354,8 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="१५"
-                android:textColor="@color/patro_on_primary"
-                android:background="@drawable/notification_week_today"
+                android:textColor="@color/widget_today_text"
+                android:background="@drawable/widget_today_cell"
                 android:textSize="13sp" />
             <TextView
                 android:layout_width="0dp"

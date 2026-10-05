@@ -49,7 +49,7 @@ object TodayNotification {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             // Always Devanagari: the icon is meant to read like a Nepali wall calendar.
             .setSmallIcon(DayIcon.create(BsFormat("ne", "ne").number(info.bs.day)))
-            .setColor(ContextCompat.getColor(context, R.color.patro_primary))
+            .setColor(ContextCompat.getColor(context, R.color.notification_accent))
             // Plain text is also what the lock screen, accessibility and wearables use.
             .setContentTitle(info.headline)
             .setContentText(info.summary)
@@ -147,7 +147,7 @@ object TodayNotification {
                 setTextViewText(WEEKDAY_IDS[i], format.weekdayShort(i))
                 setTextViewText(DAY_IDS[i], format.number(BsConverter.toBs(date).day))
                 val color = when {
-                    date == today -> R.color.patro_on_primary
+                    date == today -> R.color.notification_today_text
                     date in holidays -> R.color.notification_holiday
                     i == 6 -> R.color.notification_saturday
                     else -> null

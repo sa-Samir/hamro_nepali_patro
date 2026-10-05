@@ -514,10 +514,10 @@ class AppLocalizationsNe extends AppLocalizations {
   String get widgetThemeMarigoldHint => 'मरुनसहित न्यानो सयपत्री रङ';
 
   @override
-  String get widgetThemeCream => 'क्रिम';
+  String get widgetThemeCream => 'हल्का हरियो';
 
   @override
-  String get widgetThemeCreamHint => 'हल्का र सादा, डार्क मोड अनुसार फेरिन्छ';
+  String get widgetThemeCreamHint => 'हल्का, डार्क मोड अनुसार फेरिन्छ';
 
   @override
   String get previewSeason => 'ऋतु पूर्वावलोकन';
@@ -612,4 +612,10 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get settingsSubtitle => 'परिवर्तन गर्न टाइल थिच्नुहोस्';
+
+  @override
+  String get widgetThemeForest => 'वन';
+
+  @override
+  String get widgetThemeForestHint => 'एपजस्तै गाढा हरियो र कागती रङ';
 }
