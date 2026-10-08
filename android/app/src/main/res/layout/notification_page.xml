@@ -2,22 +2,23 @@
 <!-- Collapsed: a small tear-off page, weekday and tithi beside it. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/notification_card_panel"
-    android:padding="12dp"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="44dp"
-        android:layout_height="46dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/notification_page_bg"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/month"
             android:layout_width="match_parent"
-            android:layout_height="14dp"
+            android:layout_height="13dp"
             android:background="@drawable/notification_page_strip"
             android:gravity="center"
             android:includeFontPadding="false"
@@ -33,7 +34,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:textColor="@color/notification_page_ink"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -47,6 +48,8 @@
         <TextView
             android:id="@+id/title"
             style="@style/TextAppearance.Compat.Notification.Title"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
             android:textColor="@color/notification_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,6 +59,9 @@
         <TextView
             android:id="@+id/subtitle"
             style="@style/TextAppearance.Compat.Notification.Line2"
+            android:includeFontPadding="false"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
             android:textColor="@color/notification_text_muted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

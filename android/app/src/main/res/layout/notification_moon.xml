@@ -2,7 +2,8 @@
 <!-- Moon style, collapsed: today's moon phase and tithi. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/notification_card_panel"
-    android:padding="12dp"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -10,8 +11,8 @@
 
     <ImageView
         android:id="@+id/moon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:importantForAccessibility="no" />
 
     <LinearLayout
@@ -24,6 +25,8 @@
         <TextView
             android:id="@+id/title"
             style="@style/TextAppearance.Compat.Notification.Title"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
             android:textColor="@color/notification_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +36,9 @@
         <TextView
             android:id="@+id/subtitle"
             style="@style/TextAppearance.Compat.Notification.Line2"
+            android:includeFontPadding="false"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
             android:textColor="@color/notification_text_muted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
