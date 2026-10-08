@@ -59,16 +59,21 @@ class ReminderScheduler {
     } catch (_) {
       tz.setLocalLocation(tz.getLocation('Asia/Kathmandu'));
     }
-    await _plugin.initialize(
-      settings: const InitializationSettings(
-        android: AndroidInitializationSettings('@drawable/ic_stat_patro'),
-        iOS: DarwinInitializationSettings(
-          requestAlertPermission: false,
-          requestBadgePermission: false,
-          requestSoundPermission: false,
+    // A broken notification setup must never stop the app from starting.
+    try {
+      await _plugin.initialize(
+        settings: const InitializationSettings(
+          android: AndroidInitializationSettings('@drawable/ic_stat_patro'),
+          iOS: DarwinInitializationSettings(
+            requestAlertPermission: false,
+            requestBadgePermission: false,
+            requestSoundPermission: false,
+          ),
         ),
-      ),
-    );
+      );
+    } on Exception catch (e) {
+      debugPrint('Notifications unavailable: $e');
+    }
   }
 
   /// Asks for notification permission. Returns whether it was granted.
