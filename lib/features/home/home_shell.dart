@@ -58,14 +58,23 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       body: PatroBackground(
         child: IndexedStack(
           index: _index,
-          children: const [CalendarPage(), ConverterPage(), NotesPage(), SettingsPage()],
+          children: const [
+            CalendarPage(),
+            ConverterPage(),
+            NotesPage(),
+            SettingsPage(),
+          ],
         ),
       ),
       bottomNavigationBar: _FloatingNavBar(
         index: _index,
         onSelect: _select,
         items: [
-          (Icons.calendar_month_outlined, Icons.calendar_month, l10n.navCalendar),
+          (
+            Icons.calendar_month_outlined,
+            Icons.calendar_month,
+            l10n.navCalendar,
+          ),
           (Icons.swap_horiz, Icons.swap_horiz, l10n.navConverter),
           (Icons.notifications_none, Icons.notifications, l10n.navNotes),
           (Icons.settings_outlined, Icons.settings, l10n.navSettings),
@@ -77,7 +86,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
 
 /// A floating pill of round icon buttons; the active one is filled.
 class _FloatingNavBar extends StatelessWidget {
-  const _FloatingNavBar({required this.index, required this.onSelect, required this.items});
+  const _FloatingNavBar({
+    required this.index,
+    required this.onSelect,
+    required this.items,
+  });
 
   final int index;
   final ValueChanged<int> onSelect;
@@ -112,20 +125,32 @@ class _FloatingNavBar extends StatelessWidget {
                           selected: i == index,
                           button: true,
                           label: items[i].$3,
-                          child: InkResponse(
-                            onTap: () => onSelect(i),
-                            radius: 28,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              width: i == index ? 64 : 52,
-                              height: 52,
-                              decoration: BoxDecoration(
-                                color: i == index ? p.highlight : Colors.transparent,
-                                borderRadius: BorderRadius.circular(26),
-                              ),
-                              child: Icon(
-                                i == index ? items[i].$2 : items[i].$1,
-                                color: i == index ? p.onHighlight : onSurface.withValues(alpha: 0.75),
+                          // Each button clips its own ink to its pill, so the
+                          // ripple has the same shape whether or not it's selected.
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            width: i == index ? 64 : 52,
+                            height: 52,
+                            child: Material(
+                              color: i == index
+                                  ? p.highlight
+                                  : Colors.transparent,
+                              shape: const StadiumBorder(),
+                              clipBehavior: Clip.antiAlias,
+                              child: InkWell(
+                                onTap: () => onSelect(i),
+                                splashColor:
+                                    (i == index ? p.onHighlight : onSurface)
+                                        .withValues(alpha: 0.12),
+                                highlightColor:
+                                    (i == index ? p.onHighlight : onSurface)
+                                        .withValues(alpha: 0.08),
+                                child: Icon(
+                                  i == index ? items[i].$2 : items[i].$1,
+                                  color: i == index
+                                      ? p.onHighlight
+                                      : onSurface.withValues(alpha: 0.75),
+                                ),
                               ),
                             ),
                           ),
